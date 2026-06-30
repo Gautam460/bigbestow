@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => (isset($_SERVER['HTTP_HOST']) && str_contains(strtolower($_SERVER['HTTP_HOST']), 'bigbestow.com')) ? 'https://bigbestow.com/' : env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
