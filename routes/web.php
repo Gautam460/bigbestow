@@ -72,7 +72,7 @@ Route::get('/admin/login', [\App\Http\Controllers\Admin\AuthController::class, '
 Route::post('/admin/login', [\App\Http\Controllers\Admin\AuthController::class, 'login']);
 Route::post('/admin/logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('admin.logout');
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
     
