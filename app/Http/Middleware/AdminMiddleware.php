@@ -15,7 +15,8 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->hasRole(['Super Admin', 'Admin'])) {
+        // चेक करते हैं कि लॉगिन यूज़र के पास superadmin या admin रोल है या नहीं
+        if (auth()->check() && auth()->user()->hasRole(['superadmin', 'admin', 'Super Admin', 'Admin'])) {
             return $next($request);
         }
         
@@ -23,6 +24,7 @@ class AdminMiddleware
             return redirect()->route('admin.login');
         }
 
+        // अगर कोई सामान्य यूज़र एडमिन पैनल खोलने की कोशिश करे तो उसे होमपेज पर भेज दें
         return redirect('/');
     }
 }

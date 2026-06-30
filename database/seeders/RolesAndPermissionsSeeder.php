@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -15,49 +18,67 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create permissions
-        \Spatie\Permission\Models\Permission::firstOrCreate(['name' => 'manage products']);
-        \Spatie\Permission\Models\Permission::firstOrCreate(['name' => 'manage categories']);
-        \Spatie\Permission\Models\Permission::firstOrCreate(['name' => 'manage orders']);
-        \Spatie\Permission\Models\Permission::firstOrCreate(['name' => 'manage users']);
+        // 1. Create Permissions (यहाँ आप अपनी ज़रूरत के अनुसार और भी permissions जोड़ सकते हैं)
+        $permissions = [
+            'manage products',
+            'manage categories',
+            'manage orders',
+            'manage users',
+            'manage settings',
+        ];
 
-        // Create roles and assign created permissions
-        $role1 = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Super Admin']);
-        $role1->givePermissionTo(\Spatie\Permission\Models\Permission::all());
+        foreach ($permissions as $perm) {
+            Permission::firstOrCreate(['name' => $perm]);
+        }
 
-        $role2 = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'Admin']);
-        $role2->givePermissionTo(['manage products', 'manage categories', 'manage orders']);
+        // 2. Create Three Roles: superadmin, admin, user
+        $superAdminRole = Role::firstOrCreate(['name' => 'superadmin']);
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $userRole = Role::firstOrCreate(['name' => 'user']);
 
-        $role3 = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'User']);
+        // Superadmin को सभी permissions दे रहे हैं
+        $superAdminRole->givePermissionTo(Permission::all());
 
-        // 1. Create Super Admin
-        $superAdmin = \App\Models\User::firstOrCreate(
+        // Admin को केवल प्रोडक्ट्स, केटेगरी और ऑर्डर्स की permission दी है
+        $adminRole->givePermissionTo(['manage products', 'manage categories', 'manage orders']);
+
+        // User (ग्राहक) को कोई एडमिन permission नहीं दी गई है
+
+        // ---------------------------------------------------------
+        // 3. Default Login Credentials (यहाँ से आप Username/Email और Password देख या बदल सकते हैं)
+        // ---------------------------------------------------------
+
+        // 1️⃣ SUPER ADMIN LOGIN
+        // Email: superadmin@bigbestow.com | Password: password123
+        $superAdmin = User::firstOrCreate(
             ['email' => 'superadmin@bigbestow.com'],
             [
                 'name' => 'Super Admin',
-                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                'password' => Hash::make('password123'),
             ]
         );
-        $superAdmin->assignRole($role1);
+        $superAdmin->assignRole($superAdminRole);
 
-        // 2. Create Admin
-        $admin = \App\Models\User::firstOrCreate(
+        // 2️⃣ ADMIN LOGIN
+        // Email: admin@bigbestow.com | Password: password123
+        $admin = User::firstOrCreate(
             ['email' => 'admin@bigbestow.com'],
             [
                 'name' => 'Store Admin',
-                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                'password' => Hash::make('password123'),
             ]
         );
-        $admin->assignRole($role2);
+        $admin->assignRole($adminRole);
 
-        // 3. Create Regular User
-        $user = \App\Models\User::firstOrCreate(
+        // 3️⃣ NORMAL USER LOGIN
+        // Email: user@bigbestow.com | Password: password123
+        $user = User::firstOrCreate(
             ['email' => 'user@bigbestow.com'],
             [
-                'name' => 'Regular User',
-                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                'name' => 'Normal User',
+                'password' => Hash::make('password123'),
             ]
         );
-        $user->assignRole($role3);
+        $user->assignRole($userRole);
     }
 }
