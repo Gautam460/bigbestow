@@ -3,13 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name('home');
-
-Route::get('/products', function () {
-    return Inertia::render('Products');
-})->name('products');
+Route::get('/', [\App\Http\Controllers\FrontendController::class, 'home'])->name('home');
+Route::get('/products', [\App\Http\Controllers\FrontendController::class, 'products'])->name('products');
 
 Route::get('/about', function () {
     return Inertia::render('About');
