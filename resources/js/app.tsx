@@ -13,7 +13,14 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
-    resolve: (name) => resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx')),
+    resolve: (name) => {
+        const pages = import.meta.glob('./pages/**/*.{jsx,tsx}');
+        const page = pages[`./pages/${name}.jsx`] || pages[`./pages/${name}.tsx`];
+        if (!page) {
+            throw new Error(`Page component "${name}" could not be found.`);
+        }
+        return page();
+    },
     setup({ el, App, props }) {
         const root = createRoot(el);
         root.render(<App {...props} />);
@@ -27,7 +34,7 @@ createInertiaApp({
             case name.startsWith('settings/'):
                 return [AppLayout, SettingsLayout];
             case name.startsWith('Admin/'):
-                return AppLayout;
+                return null;
             case name === 'dashboard':
                 return AppLayout;
             default:
