@@ -26,9 +26,9 @@ class AuthController extends Controller
             $user = Auth::user();
             
             // Check if user has admin privileges
-            if ($user->hasRole(['Super Admin', 'Admin'])) {
+            if ($user->hasRole(['superadmin', 'admin', 'Super Admin', 'Admin'])) {
                 $request->session()->regenerate();
-                return redirect()->intended('/admin');
+                return redirect()->intended('/admin/dashboard');
             }
 
             // If not admin, log out and throw error
