@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -21,7 +22,7 @@ class CategoryController extends Controller
 
         $category = Category::create([
             'name' => $validated['name'],
-            'slug' => \Illuminate\Support\Str::slug($validated['name']),
+            'slug' => Str::slug($validated['name']),
         ]);
 
         return response()->json($category, 201);
@@ -40,7 +41,7 @@ class CategoryController extends Controller
 
         $category->update([
             'name' => $validated['name'],
-            'slug' => \Illuminate\Support\Str::slug($validated['name']),
+            'slug' => Str::slug($validated['name']),
         ]);
 
         return response()->json($category);
@@ -49,6 +50,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+
         return response()->json(null, 204);
     }
 }

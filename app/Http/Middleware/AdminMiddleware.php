@@ -15,12 +15,14 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // चेक करते हैं कि लॉगिन यूज़र के पास superadmin या admin रोल है या नहीं
-        if (auth()->check() && auth()->user()->hasRole(['superadmin', 'admin', 'Super Admin', 'Admin'])) {
+        // चेक करते हैं कि admin गार्ड में लॉगिन यूज़र के पास superadmin या admin रोल है या नहीं
+        if (auth('admin')->check() && auth('admin')->user()->hasRole(['superadmin', 'admin', 'Super Admin', 'Admin'])) {
+            auth()->shouldUse('admin');
+
             return $next($request);
         }
-        
-        if (!auth()->check()) {
+
+        if (! auth('admin')->check()) {
             return redirect()->route('admin.login');
         }
 

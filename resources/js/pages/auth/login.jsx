@@ -17,7 +17,7 @@ export default function Login({ status, canResetPassword, canRegister }) {
 
     return (
         <div className="min-h-screen bg-[#FDFDFD] flex flex-col items-center pt-[5vh] lg:pt-0 lg:flex-row lg:items-center justify-center p-6 relative overflow-hidden font-sans">
-            <Head title="Login | BigBestow" />
+            <Head title="Login | Bigbestow" />
             
             {/* Artistic Background */}
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-yellow-500/10 blur-[120px] rounded-full -mr-32 -mt-32"></div>
@@ -108,7 +108,7 @@ export default function Login({ status, canResetPassword, canRegister }) {
                     {canRegister && (
                         <div className="mt-8 text-center">
                             <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest">
-                                New to BigBestow?{' '}
+                                New to Bigbestow?{' '}
                                 <Link href="/register" className="text-yellow-600 hover:text-yellow-700 ml-1">
                                     Create Free Account
                                 </Link>

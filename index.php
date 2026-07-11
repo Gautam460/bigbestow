@@ -7,5 +7,5 @@
 if (file_exists(__DIR__.'/public/index.php')) {
     require_once __DIR__.'/public/index.php';
 } else {
-    echo "Error: public/index.php not found.";
+    echo 'Error: public/index.php not found.';
 }

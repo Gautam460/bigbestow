@@ -1,6 +1,5 @@
 import { Head, useForm, Link } from '@inertiajs/react';
-import { UserPlus, ArrowRight, Loader2, Mail, Lock, User } from 'lucide-react';
-import AppLogo from '@/components/app-logo';
+import { UserPlus, ArrowRight, Loader2, Mail, Lock, User, ShoppingBag } from 'lucide-react';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -19,7 +18,7 @@ export default function Register() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row-reverse">
-            <Head title="Register | BigBestow" />
+            <Head title="Register | Bigbestow" />
             
             {/* Left Side: Branding/Image */}
             <div className="hidden md:flex md:w-1/2 bg-yellow-500 items-center justify-center p-12 relative overflow-hidden">
@@ -43,11 +42,14 @@ export default function Register() {
             <div className="flex-1 flex items-center justify-center p-6 sm:p-12 bg-white">
                 <div className="w-full max-w-sm space-y-10">
                     <div className="text-center md:text-left">
-                        <Link href="/" className="inline-block md:hidden mb-8">
-                            <AppLogo className="w-12 h-12" />
+                        <Link href="/" className="inline-flex items-center gap-2 font-black text-3xl tracking-tighter uppercase italic md:hidden mb-8">
+                            <div className="w-10 h-10 bg-yellow-500 rounded-2xl flex items-center justify-center shadow-xl shadow-yellow-500/20">
+                                <ShoppingBag className="w-6 h-6 text-white" />
+                            </div>
+                            Big<span className="text-yellow-500">bestow</span>
                         </Link>
                         <h1 className="text-4xl font-black text-slate-900 tracking-tight">Create Account</h1>
-                        <p className="text-slate-400 font-bold text-sm mt-2">Enter your details to join BigBestow</p>
+                        <p className="text-slate-400 font-bold text-sm mt-2">Enter your details to join Bigbestow</p>
                     </div>
 
                     <form onSubmit={submit} className="space-y-6">

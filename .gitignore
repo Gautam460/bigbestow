@@ -27,3 +27,9 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# Large zip files
+Archive.zip
+symfony_string.zip
+vendor.zip
+*.zip

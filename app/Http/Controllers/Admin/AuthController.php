@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
 
 class AuthController extends Controller
 {
@@ -22,17 +22,18 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            $user = Auth::user();
-            
+        if (Auth::guard('admin')->attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+            $user = Auth::guard('admin')->user();
+
             // Check if user has admin privileges
             if ($user->hasRole(['superadmin', 'admin', 'Super Admin', 'Admin'])) {
                 $request->session()->regenerate();
+
                 return redirect()->intended('/admin/dashboard');
             }
 
             // If not admin, log out and throw error
-            Auth::logout();
+            Auth::guard('admin')->logout();
             throw ValidationException::withMessages([
                 'email' => 'These credentials do not have administrative access.',
             ]);
@@ -45,9 +46,9 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
+        Auth::guard('admin')->logout();
         $request->session()->regenerateToken();
+
         return redirect('/admin/login');
     }
 }

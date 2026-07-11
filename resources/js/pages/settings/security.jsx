@@ -33,7 +33,7 @@ export default function Security({
         fetchRecoveryCodes,
         errors,
     } = useTwoFactorAuth();
-    const [showSetupModal, setShowSetupModal] = useState<boolean>(false);
+    const [showSetupModal, setShowSetupModal] = useState(false);
     const prevTwoFactorEnabled = useRef(twoFactorEnabled);
 
     useEffect(() => {

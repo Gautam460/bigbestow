@@ -6,7 +6,7 @@ import { Target, Users, Zap, Globe, CheckCircle2 } from 'lucide-react';
 export default function About() {
     return (
         <EcommerceLayout>
-            <Head title="About Us - ShopStyle" />
+            <Head title="About Us - Bigbestow" />
             
             {/* Hero Section */}
             <div className="relative bg-black text-white py-24 lg:py-32 overflow-hidden">
@@ -20,9 +20,9 @@ export default function About() {
                 </div>
                 
                 <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-                    <h1 className="text-4xl md:text-6xl font-black mb-6">Redefining Fashion for the Modern World.</h1>
+                    <h1 className="text-4xl md:text-6xl font-black mb-6">Redefining Shopping for the Modern World.</h1>
                     <p className="text-xl text-gray-300 leading-relaxed">
-                        At ShopStyle, we believe that high-quality fashion should be accessible to everyone. We blend cutting-edge design with sustainable practices to create clothing that looks good and feels good.
+                        At Bigbestow, we believe that premium quality products should be accessible to everyone. We blend cutting-edge design with customer satisfaction to curate collections that inspire.
                     </p>
                 </div>
             </div>
@@ -37,7 +37,7 @@ export default function About() {
                         </div>
                         <div>
                             <div className="text-4xl font-black mb-2">50+</div>
-                            <div className="text-indigo-200 font-medium uppercase tracking-wider text-sm">Countries Served</div>
+                            <div className="text-indigo-200 font-medium uppercase tracking-wider text-sm">Cities & Regions</div>
                         </div>
                         <div>
                             <div className="text-4xl font-black mb-2">99%</div>
@@ -64,7 +64,7 @@ export default function About() {
                             <Target className="w-7 h-7 text-indigo-600" />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-3">Uncompromising Quality</h3>
-                        <p className="text-gray-600">We source the finest materials to ensure every piece we create stands the test of time.</p>
+                        <p className="text-gray-600">We source the finest materials and brands to ensure every product stands the test of time.</p>
                     </div>
 
                     <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow">
@@ -72,15 +72,15 @@ export default function About() {
                             <Users className="w-7 h-7 text-indigo-600" />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-3">Community First</h3>
-                        <p className="text-gray-600">We listen to our customers. Your feedback directly shapes our future collections.</p>
+                        <p className="text-gray-600">We listen to our customers. Your feedback directly shapes our catalog and deals.</p>
                     </div>
 
                     <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow">
                         <div className="bg-white w-14 h-14 rounded-xl flex items-center justify-center shadow-sm mb-6">
                             <Globe className="w-7 h-7 text-indigo-600" />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">Sustainability</h3>
-                        <p className="text-gray-600">We are committed to eco-friendly packaging and ethical manufacturing processes.</p>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">Trust & Reliability</h3>
+                        <p className="text-gray-600">We are committed to secure transactions, fast delivery, and honest customer policies.</p>
                     </div>
 
                     <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow">
@@ -88,7 +88,7 @@ export default function About() {
                             <Zap className="w-7 h-7 text-indigo-600" />
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-3">Fast Innovation</h3>
-                        <p className="text-gray-600">Fashion moves fast, and so do we. We constantly update our styles to match global trends.</p>
+                        <p className="text-gray-600">Shopping trends move fast, and so do we. We constantly update our store to match global styles.</p>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@ export default function About() {
                         <div className="inline-block px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 font-bold text-sm">Our Story</div>
                         <h2 className="text-4xl font-black text-gray-900">How it all started.</h2>
                         <p className="text-lg text-gray-600 leading-relaxed">
-                            Founded in 2020 inside a small garage, ShopStyle began with a simple mission: to create the perfect everyday t-shirt. Since then, we've grown into a global brand, but our obsession with perfect fits and premium fabrics hasn't changed.
+                            Founded with a passion for excellence, Bigbestow began with a simple mission: to create the ultimate destination for top-notch lifestyle gear and everyday essentials. Since then, we've grown into a trusted e-commerce leader.
                         </p>
                         <ul className="space-y-4 mt-6">
                             <li className="flex items-center gap-3 text-gray-700 font-medium">

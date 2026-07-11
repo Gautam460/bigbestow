@@ -84,36 +84,8 @@ export default function AdminDashboard({ products = [], categories = [], stats =
     );
 
     return (
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
-            <Head title="Super Admin Dashboard | BigBestow" />
-
-            {/* Top Navigation Header */}
-            <header className="bg-slate-900 text-white shadow-lg sticky top-0 z-30">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-yellow-500 to-amber-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-md">
-                            B
-                        </div>
-                        <div>
-                            <span className="font-black tracking-wider text-lg uppercase">BigBestow</span>
-                            <span className="ml-2 text-xs bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded-full font-bold uppercase border border-yellow-500/30">
-                                Super Admin Portal
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-4">
-                        <button 
-                            onClick={handleLogout}
-                            className="flex items-center gap-2 px-4 py-2 bg-rose-600/20 text-rose-300 hover:bg-rose-600 hover:text-white rounded-xl text-sm font-bold transition-all border border-rose-500/30"
-                        >
-                            <LogOut className="w-4 h-4" /> Logout
-                        </button>
-                    </div>
-                </div>
-            </header>
-
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="space-y-8">
+            <Head title="Super Admin Dashboard | Bigbestow" />
                 {/* Stats Summary Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                     <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
@@ -211,7 +183,7 @@ export default function AdminDashboard({ products = [], categories = [], stats =
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 font-black text-slate-900">
-                                                ${p.price}
+                                                ₹{p.price}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${
@@ -251,7 +223,6 @@ export default function AdminDashboard({ products = [], categories = [], stats =
                         </table>
                     </div>
                 </div>
-            </main>
 
             {/* Modal for Adding / Editing Product */}
             {isAddModalOpen && (
@@ -285,7 +256,7 @@ export default function AdminDashboard({ products = [], categories = [], stats =
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-1">
-                                        Price ($)
+                                        Price (₹)
                                     </label>
                                     <input 
                                         type="number"
@@ -293,7 +264,7 @@ export default function AdminDashboard({ products = [], categories = [], stats =
                                         required
                                         value={data.price}
                                         onChange={(e) => setData('price', e.target.value)}
-                                        placeholder="299"
+                                        placeholder="2499"
                                         className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-yellow-500/30 focus:border-yellow-500 font-medium text-sm"
                                     />
                                     {errors.price && <p className="text-rose-500 text-xs font-bold mt-1">{errors.price}</p>}

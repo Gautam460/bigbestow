@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use Inertia\Inertia;
-
-use App\Models\Product;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
+use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
@@ -32,7 +29,7 @@ class DashboardController extends Controller
                 'totalCategories' => $totalCategories,
                 'totalOrders' => $totalOrders,
                 'totalUsers' => $totalUsers,
-            ]
+            ],
         ]);
     }
 }

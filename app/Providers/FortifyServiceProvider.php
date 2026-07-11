@@ -11,6 +11,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
+use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 
@@ -22,29 +23,22 @@ class FortifyServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(
-            \Laravel\Fortify\Contracts\LoginResponse::class,
+            LoginResponse::class,
             function () {
-                return new class implements \Laravel\Fortify\Contracts\LoginResponse {
+                return new class implements LoginResponse
+                {
                     public function toResponse($request)
                     {
                         $user = $request->user();
                         $isAdmin = $user->hasRole(['Super Admin', 'Admin']);
 
-                        // If user is admin but logged in via regular /login
-                        if ($isAdmin && !$request->is('admin/*') && !$request->is('admin')) {
-                            return redirect('/admin'); // Force them to admin dashboard
-                        }
-                        
-                        // If user is NOT admin but somehow logged in via admin (shouldn't happen with custom controller)
-                        if (!$isAdmin) {
-                            return redirect('/');
-                        }
-
-                        if ($isAdmin) {
+                        // Only redirect to admin panel if login originated from admin login portal
+                        if ($isAdmin && ($request->is('admin/*') || $request->is('admin') || $request->input('login_type') === 'admin')) {
                             return redirect('/admin');
                         }
 
-                        return redirect('/');
+                        // For frontend customer website login (/login), redirect to customer account dashboard
+                        return redirect()->intended('/dashboard');
                     }
                 };
             }

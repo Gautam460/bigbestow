@@ -18,7 +18,7 @@ export default function Login({ status }) {
 
     return (
         <div className="min-h-screen bg-[#050505] flex flex-col items-center pt-[8vh] p-4 selection:bg-indigo-500/30 font-sans">
-            <Head title="Secure Admin Access | BigBestow" />
+            <Head title="Secure Admin Access | Bigbestow" />
             
             {/* Background Decorative Elements */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">

@@ -8,6 +8,11 @@ class Product extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'gallery' => 'array',
+        'status' => 'boolean',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

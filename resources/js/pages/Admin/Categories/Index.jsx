@@ -46,6 +46,7 @@ export default function Index({ categories }) {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-slate-50/50">
+                                <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Image</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Name</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Slug</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Actions</th>
@@ -54,6 +55,13 @@ export default function Index({ categories }) {
                         <tbody className="divide-y divide-gray-50">
                             {categories.length > 0 ? categories.map((category) => (
                                 <tr key={category.id} className="hover:bg-slate-50/50 transition-colors group">
+                                    <td className="px-6 py-4">
+                                        {category.image ? (
+                                            <img src={category.image} alt={category.name} className="w-12 h-12 rounded-xl object-cover border border-gray-200" />
+                                        ) : (
+                                            <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-slate-400 font-bold text-xs">No img</div>
+                                        )}
+                                    </td>
                                     <td className="px-6 py-4">
                                         <div className="font-bold text-slate-900 group-hover:text-yellow-600 transition-colors">{category.name}</div>
                                     </td>
@@ -79,7 +87,7 @@ export default function Index({ categories }) {
                                 </tr>
                             )) : (
                                 <tr>
-                                    <td colSpan="3" className="px-6 py-12 text-center text-slate-400 font-medium italic">
+                                    <td colSpan="4" className="px-6 py-12 text-center text-slate-400 font-medium italic">
                                         No categories found. Start by adding one!
                                     </td>
                                 </tr>

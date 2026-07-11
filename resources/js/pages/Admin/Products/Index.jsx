@@ -58,7 +58,11 @@ export default function Index({ products }) {
                                 <tr key={product.id} className="hover:bg-slate-50/50 transition-colors group">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-xl shadow-inner">🏏</div>
+                                            {product.image ? (
+                                                <img src={product.image} alt={product.name} className="w-12 h-12 rounded-xl object-cover border border-slate-200 shadow-sm" />
+                                            ) : (
+                                                <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-xl shadow-inner">🏏</div>
+                                            )}
                                             <div className="font-bold text-slate-900 group-hover:text-yellow-600 transition-colors">{product.name}</div>
                                         </div>
                                     </td>
@@ -66,7 +70,7 @@ export default function Index({ products }) {
                                         <span className="px-2 py-1 bg-slate-50 rounded-md border border-slate-100">{product.category?.name || 'N/A'}</span>
                                     </td>
                                     <td className="px-6 py-4 text-sm font-black text-slate-900">
-                                        ${product.price}
+                                        ₹{product.price}
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={`text-[10px] font-black px-2 py-1 rounded-full ${product.stock > 10 ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}`}>

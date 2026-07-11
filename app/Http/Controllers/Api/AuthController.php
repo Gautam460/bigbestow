@@ -48,7 +48,7 @@ class AuthController extends Controller
             $user = Auth::user();
 
             // चेक करें कि यूज़र के पास superadmin या admin रोल है या नहीं
-            if (!$user->hasRole(['superadmin', 'admin', 'Super Admin', 'Admin'])) {
+            if (! $user->hasRole(['superadmin', 'admin', 'Super Admin', 'Admin'])) {
                 Auth::guard('web')->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
