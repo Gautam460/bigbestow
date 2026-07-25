@@ -1,0 +1,162 @@
+/* ==========================================================================
+   BIGBESTOW E-COMMERCE CUSTOM STYLESHEET
+   Aap yahan par website aur admin panel ke liye apne custom CSS changes kar sakte hain.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CUSTOM VARIABLES & THEME COLORS
+   Apne store ke primary colors ya variables yahan se badal sakte hain.
+   -------------------------------------------------------------------------- */
+:root {
+    --brand-primary: #4f46e5;
+    /* Indigo 600 - Main Brand Color */
+    --brand-secondary: #eab308;
+    /* Yellow 500 - Accent / Highlight Color */
+    --brand-dark: #0f172a;
+    /* Slate 900 - Dark Backgrounds */
+    --brand-light: #f8fafc;
+    /* Slate 50 - Light Backgrounds */
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+/* Normal paragraphs default to black color (except when white or accent color classes are applied) */
+p:not(.text-white):not([class*="text-white"]):not([class*="text-slate-100"]):not([class*="text-slate-200"]):not([class*="text-slate-300"]):not([class*="text-yellow-"]):not([class*="text-rose-"]):not([class*="text-emerald-"]) {
+    color: #000000;
+}
+
+/* Dark backgrounds (jaise dark banners, footers ya cards) ke andar wale paragraphs hamesha white rahenge */
+.bg-gray-900 p,
+.bg-slate-900 p,
+.bg-black p,
+.bg-indigo-600 p,
+p.text-white {
+    color: #ffffff !important;
+}
+
+/* Smart List Styling: Careers, Terms ya Privacy pages par lists ke bullets aur spacing proper show honge */
+.prose ul, ul.list-disc {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
+
+.prose ol, ol.list-decimal {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+}
+
+/* Normal list items black rahenge, par dark background ya white class wale items white rahenge */
+li:not(.text-white):not([class*="text-white"]):not([class*="text-slate-"]):not([class*="text-indigo-"]) {
+    color: #000000;
+}
+
+.bg-gray-900 li, .bg-slate-900 li, .bg-black li, li.text-white {
+    color: #ffffff !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. GENERAL & BASE STYLES
+   Website ki basic body, selection aur scrollbar settings.
+   -------------------------------------------------------------------------- */
+::selection {
+    background-color: var(--brand-primary);
+    color: #ffffff;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --------------------------------------------------------------------------
+   3. REUSABLE CUSTOM COMPONENTS & UTILITIES
+   In classes ka use aap kisi bhi React component (.jsx) mein kar sakte hain.
+   -------------------------------------------------------------------------- */
+
+/* Premium Glassmorphism Effect */
+.custom-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Custom Hover Scale Effect for Product Cards */
+.custom-card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.custom-card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom Primary Button Style */
+.custom-btn-primary {
+    background-color: var(--brand-primary);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.custom-btn-primary:hover {
+    background-color: #4338ca;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   4. CUSTOM ANIMATIONS
+   Banner ya logos par special animation lagane ke liye.
+   -------------------------------------------------------------------------- */
+@keyframes custom-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.animate-custom-float {
+    animation: custom-float 4s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   5. ADMIN PANEL CUSTOMIZATIONS
+   Admin layout ke liye specific CSS overrides.
+   -------------------------------------------------------------------------- */
+.admin-sidebar {
+    /* Admin sidebar ke custom styling yahan add kar sakte hain */
+}
+
+/* --------------------------------------------------------------------------
+   6. CUSTOMER WEBSITE CUSTOMIZATIONS
+   Home page, Products page ya Cart page ke liye custom CSS.
+   -------------------------------------------------------------------------- */
+.product-grid-custom {
+    /* Product listing grid ya cards ke overrides */
+}
