@@ -34,4 +34,4 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["sh", "-c", "php artisan storage:link || true && php-fpm"]
