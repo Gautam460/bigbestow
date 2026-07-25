@@ -1,0 +1,11 @@
+#!/usr/bin/expect -f
+set timeout -1
+spawn scp -o StrictHostKeyChecking=no deploy3.sh root@129.121.125.62:/root/deploy3.sh
+expect "password:"
+send "1Faisal@123\r"
+expect eof
+
+spawn ssh -o StrictHostKeyChecking=no root@129.121.125.62 "chmod +x /root/deploy3.sh && /root/deploy3.sh"
+expect "password:"
+send "1Faisal@123\r"
+expect eof

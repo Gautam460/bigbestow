@@ -1,0 +1,6 @@
+#!/usr/bin/expect -f
+set timeout -1
+spawn ssh -o StrictHostKeyChecking=no root@129.121.125.62 "systemctl stop nginx && cd /var/www/html && docker compose up -d"
+expect "password:"
+send "1Faisal@123\r"
+expect eof
