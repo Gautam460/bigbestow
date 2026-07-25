@@ -27,7 +27,7 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Install dependencies
-RUN rm -f composer.lock && composer update --no-audit --no-interaction --optimize-autoloader --no-dev
+RUN rm -f composer.lock && composer update --no-audit --no-scripts --no-interaction --optimize-autoloader --no-dev
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
