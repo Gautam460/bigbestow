@@ -26,11 +26,11 @@ services:
       - APP_URL=https://bigbestow.com
       - APP_KEY=base64:5y7haecX82oSq6hDyXQgAIZH9yG1Hs93cz1Kc4EWkkg=
       - DB_CONNECTION=mysql
-      - DB_HOST=db
+      - DB_HOST=129.121.125.62
       - DB_PORT=3306
-      - DB_DATABASE=${DB_DATABASE:-ecommerce_faisal}
-      - DB_USERNAME=${DB_USERNAME:-root}
-      - DB_PASSWORD=${DB_PASSWORD:-Gautam@123#}
+      - DB_DATABASE=bigbestow
+      - DB_USERNAME=bigbestow
+      - DB_PASSWORD=1Faisal@123
     depends_on:
       - db
     networks:
