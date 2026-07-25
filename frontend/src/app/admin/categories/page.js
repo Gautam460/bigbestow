@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Head } from '@/lib/inertia-compat';
 import { Tags, Plus, Edit2, Trash2, Search, X, Loader2 } from 'lucide-react';
+import { getImgSrc } from '@/utils/imgSrc';
 import api from '@/lib/api';
 import { toast } from 'sonner';
 
@@ -137,7 +138,7 @@ export default function AdminCategoriesPage() {
                                 {filtered.length > 0 ? filtered.map(c => (
                                     <tr key={c.id} className="hover:bg-slate-100 dark:hover:bg-slate-700/50">
                                         <td className="px-6 py-4">
-                                            {c.image ? <img src={`http://127.0.0.1:8000${c.image}`} alt={c.name} className="w-10 h-10 rounded-lg object-cover bg-slate-200" /> : <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] text-slate-400 font-bold">N/A</div>}
+                                            {c.image ? <img src={getImgSrc(c.image)} alt={c.name} className="w-10 h-10 rounded-lg object-cover bg-slate-200" /> : <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-[10px] text-slate-400 font-bold">N/A</div>}
                                         </td>
                                         <td className="px-6 py-4 font-bold text-slate-900 dark:text-white">{c.name}</td>
                                         <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-300">{c.description || 'No description provided.'}</td>
@@ -179,7 +180,7 @@ export default function AdminCategoriesPage() {
                                 {existingImage && !image && (
                                     <div className="mt-3 flex items-center gap-3">
                                         <span className="text-xs text-slate-500 dark:text-slate-400 font-bold">Current Image:</span>
-                                        <img src={`http://127.0.0.1:8000${existingImage}`} alt="Current" className="h-12 w-12 rounded-lg object-cover bg-white" />
+                                        <img src={getImgSrc(existingImage)} alt="Current" className="h-12 w-12 rounded-lg object-cover bg-white" />
                                     </div>
                                 )}
                             </div>
