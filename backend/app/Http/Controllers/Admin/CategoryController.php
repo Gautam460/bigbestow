@@ -32,7 +32,7 @@ class CategoryController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120';
+            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:51200';
         } elseif ($request->filled('image')) {
             $rules['image'] = 'string|url';
         }
@@ -71,7 +71,7 @@ class CategoryController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120';
+            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:51200';
         } elseif ($request->filled('image')) {
             $rules['image'] = 'string';
         }

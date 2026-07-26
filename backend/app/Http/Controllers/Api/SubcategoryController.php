@@ -19,7 +19,7 @@ class SubcategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:subcategories',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|image|max:51200',
         ]);
 
         $data = [
@@ -48,7 +48,7 @@ class SubcategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:subcategories,name,'.$subcategory->id,
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|image|max:51200',
         ]);
 
         $data = [

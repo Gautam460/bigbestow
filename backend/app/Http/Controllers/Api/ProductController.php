@@ -23,7 +23,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'images.*' => 'image|max:5120', // Validate each image up to 5MB
+            'images.*' => 'image|max:51200', // Validate each image up to 50MB
         ]);
 
         $gallery = $request->input('existing_images', []);
@@ -68,7 +68,7 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'images.*' => 'image|max:5120', // Validate each image up to 5MB
+            'images.*' => 'image|max:51200', // Validate each image up to 50MB
         ]);
 
         $gallery = $request->input('existing_images', []);

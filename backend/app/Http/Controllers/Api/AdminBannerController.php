@@ -21,7 +21,7 @@ class AdminBannerController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120';
+            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:51200';
         } else {
             $rules['image'] = 'required|string';
         }
@@ -58,7 +58,7 @@ class AdminBannerController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:5120';
+            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:51200';
         }
 
         $request->validate($rules);
