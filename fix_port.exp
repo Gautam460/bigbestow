@@ -1,6 +1,0 @@
-#!/usr/bin/expect -f
-set timeout -1
-spawn ssh -o StrictHostKeyChecking=no root@129.121.125.62 "docker ps && netstat -tulpn | grep 3306"
-expect "password:"
-send "1Faisal@123\r"
-expect eof
