@@ -22,6 +22,7 @@ export default function AdminPagesPage() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [status, setStatus] = useState(true);
+    const [editorMode, setEditorMode] = useState('visual'); // 'visual' or 'code'
 
     const fetchPages = async () => {
         setLoading(true);
@@ -208,13 +209,44 @@ export default function AdminPagesPage() {
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Content (HTML allowed)</label>
-                                <CKEditor
-                                    value={content}
-                                    onChange={(data) => setContent(data)}
-                                />
+                            <div className="flex items-center justify-between mb-2">
+                                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Content (HTML allowed)</label>
+                                <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 p-1 rounded-lg">
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setEditorMode('visual')}
+                                        className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${editorMode === 'visual' ? 'bg-white dark:bg-slate-600 shadow text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                                    >
+                                        Visual
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        onClick={() => setEditorMode('code')}
+                                        className={`px-3 py-1 text-xs font-bold rounded-md transition-colors ${editorMode === 'code' ? 'bg-white dark:bg-slate-600 shadow text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                                    >
+                                        Code (Raw HTML)
+                                    </button>
+                                </div>
                             </div>
+                            
+                            {editorMode === 'visual' ? (
+                                <div className="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+                                    <CKEditor
+                                        value={content}
+                                        onChange={(data) => setContent(data)}
+                                    />
+                                    <p className="text-xs text-rose-500 mt-2 px-2 pb-2">Warning: The visual editor may strip complex Tailwind CSS classes and layouts. Use the Code editor for pages like 'about' or 'faq'.</p>
+                                </div>
+                            ) : (
+                                <textarea
+                                    value={content}
+                                    onChange={(e) => setContent(e.target.value)}
+                                    rows="15"
+                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono text-sm"
+                                    placeholder="<p>Welcome to our store...</p>"
+                                ></textarea>
+                            )}
+                        </div>
 
                             <div className="flex items-center gap-2">
                                 <input
