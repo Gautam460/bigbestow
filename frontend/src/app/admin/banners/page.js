@@ -74,8 +74,8 @@ export default function AdminBannersPage() {
             toast.error('Please select an image file (JPG, PNG, WEBP, GIF).');
             return;
         }
-        if (file.size > 5 * 1024 * 1024) {
-            toast.error('Image must be smaller than 5 MB.');
+        if (file.size > 50 * 1024 * 1024) {
+            toast.error('Image must be smaller than 50 MB.');
             return;
         }
         setImageFile(file);

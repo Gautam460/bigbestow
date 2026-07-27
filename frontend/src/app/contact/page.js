@@ -48,7 +48,7 @@ export default function ContactPage() {
                     <span className="bg-yellow-400 text-slate-950 text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full mb-4 inline-block">
                         We&apos;re Here To Help
                     </span>
-                    <h1 className="text-4xl md:text-5xl font-black uppercase italic tracking-tight">
+                    <h1 className="text-4xl md:text-5xl font-black italic tracking-tight">
                         Contact <span className="text-yellow-400">Bigbestow</span>
                     </h1>
                     <p className="text-slate-300 mt-4 text-base md:text-lg">

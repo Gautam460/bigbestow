@@ -230,27 +230,7 @@ export default function ProductDetailPage() {
                                 {product.description || 'Engineered with professional-grade English Willow, delivering superior punch, optimal balance, and massive sweet spot for explosive shot-making across the ground.'}
                             </p>
 
-                            {/* Size / Handle Selector */}
-                            <div className="mb-6">
-                                <label className="block text-xs font-black text-gray-700 dark:text-slate-300 uppercase tracking-wider mb-2">
-                                    Select Handle Size
-                                </label>
-                                <div className="grid grid-cols-3 gap-3">
-                                    {['SH (Short Handle)', 'LH (Long Handle)', 'Harrow (Youth)'].map(size => (
-                                        <button
-                                            key={size}
-                                            onClick={() => setSelectedSize(size)}
-                                            className={`py-2.5 px-3 rounded-xl font-bold text-xs border-2 transition-all ${
-                                                selectedSize === size
-                                                    ? 'border-indigo-600 bg-indigo-50 text-indigo-700 shadow-sm'
-                                                    : 'border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:border-gray-300 dark:border-slate-600'
-                                            }`}
-                                        >
-                                            {size}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
+
 
                             {/* Willow Specifications Box */}
                             <div className="bg-gray-50 dark:bg-slate-900 rounded-2xl p-5 border border-gray-100 dark:border-slate-700 mb-8 space-y-2.5">
