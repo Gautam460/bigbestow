@@ -246,7 +246,6 @@ export default function AdminPagesPage() {
                                     placeholder="<p>Welcome to our store...</p>"
                                 ></textarea>
                             )}
-                        </div>
 
                             <div className="flex items-center gap-2">
                                 <input
