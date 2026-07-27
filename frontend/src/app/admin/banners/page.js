@@ -167,7 +167,7 @@ export default function AdminBannersPage() {
         }
     };
 
-    const filtered = banners.filter(b => b.title?.toLowerCase().includes(searchTerm.toLowerCase()));
+    const filtered = banners.filter(b => (b.title || '').toLowerCase().includes(searchTerm.toLowerCase()));
     const isEdit = Boolean(editingBanner);
 
     return (

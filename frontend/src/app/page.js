@@ -100,55 +100,75 @@ export default function Home(initialProps = {}) {
             {/* 1. Clean & Bright Dynamic Hero Section (Slider) */}
             <div className="relative bg-slate-100 text-white overflow-hidden min-h-[75vh] md:min-h-[82vh] flex items-center group">
                 {/* Slides */}
-                {displayBanners.map((banner, index) => (
-                    <div
-                        key={banner.id || index}
-                        className={`absolute inset-0 transition-all duration-700 ease-in-out transform ${
-                            index === currentSlide ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-102 z-0 pointer-events-none'
-                        }`}
-                    >
-                        <div className="absolute inset-0 z-0">
-                            <img 
-                                src={getImgSrc(banner.image_url || banner.image, 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1920&q=80')} 
-                                alt={banner.title || 'Cricket equipment'} 
-                                className="w-full h-full object-cover object-center opacity-100 transition-transform duration-1000 ease-out"
-                            />
-                            {/* Soft, clean gradient ONLY on the left side for text legibility, leaving the rest of the image 100% bright and clear */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/40 to-transparent w-full md:w-3/4 lg:w-3/5"></div>
-                        </div>
-                        
-                        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36 flex flex-col items-start justify-center min-h-[75vh] md:min-h-[82vh]">
-                            <div className="inline-block px-4 py-1.5 rounded-full bg-white dark:bg-slate-800/90 text-indigo-700 font-bold text-xs md:text-sm mb-6 shadow-md border border-white/40">
-                                🏏 Official Equipment for Champions
-                            </div>
-                            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight mb-6 max-w-2xl text-white drop-shadow-md">
-                                {banner.title ? (
-                                    <span>{banner.title}</span>
-                                ) : (
-                                    <>
-                                        Power. Precision. <br />
-                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-400">Bigbestow Performance.</span>
-                                    </>
+                {displayBanners.map((banner, index) => {
+                    const hasText = banner.title || banner.id === 'default-1';
+                    
+                    const slideContent = (
+                        <>
+                            <div className="absolute inset-0 z-0">
+                                <img 
+                                    src={getImgSrc(banner.image_url || banner.image, 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1920&q=80')} 
+                                    alt={banner.title || 'Cricket equipment'} 
+                                    className="w-full h-full object-cover object-center opacity-100 transition-transform duration-1000 ease-out"
+                                />
+                                {/* Soft, clean gradient ONLY on the left side for text legibility, leaving the rest of the image 100% bright and clear */}
+                                {hasText && (
+                                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/40 to-transparent w-full md:w-3/4 lg:w-3/5"></div>
                                 )}
-                            </h1>
-                            <p className="text-lg md:text-xl text-slate-100 mb-10 max-w-xl leading-relaxed drop-shadow font-medium">
-                                {banner.subtitle || 'Hand-selected English and Kashmir Willow bats crafted for the modern cricketer. Elevate your game with professional-grade gear.'}
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                                <Link 
-                                    href={banner.link || '/products'} 
-                                    className="group/btn flex items-center justify-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95"
-                                >
-                                    Shop Collection
-                                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                                </Link>
-                                <Link href="/about" className="px-8 py-4 rounded-full font-bold text-base md:text-lg text-slate-900 bg-white dark:bg-slate-800/90 hover:bg-white dark:bg-slate-800 transition-all duration-300 text-center shadow-lg hover:scale-105">
-                                    Our Willow Selection
-                                </Link>
                             </div>
+                            
+                            {hasText && (
+                                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36 flex flex-col items-start justify-center min-h-[75vh] md:min-h-[82vh]">
+                                    <div className="inline-block px-4 py-1.5 rounded-full bg-white dark:bg-slate-800/90 text-indigo-700 font-bold text-xs md:text-sm mb-6 shadow-md border border-white/40">
+                                        🏏 Official Equipment for Champions
+                                    </div>
+                                    <h1 className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight mb-6 max-w-2xl text-white drop-shadow-md">
+                                        {banner.title ? (
+                                            <span>{banner.title}</span>
+                                        ) : (
+                                            <>
+                                                Power. Precision. <br />
+                                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-400">Bigbestow Performance.</span>
+                                            </>
+                                        )}
+                                    </h1>
+                                    <p className="text-lg md:text-xl text-slate-100 mb-10 max-w-xl leading-relaxed drop-shadow font-medium">
+                                        {banner.subtitle || 'Hand-selected English and Kashmir Willow bats crafted for the modern cricketer. Elevate your game with professional-grade gear.'}
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                                        <Link 
+                                            href={banner.link || '/products'} 
+                                            className="group/btn flex items-center justify-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95"
+                                        >
+                                            Shop Collection
+                                            <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                                        </Link>
+                                        <Link href="/about" className="px-8 py-4 rounded-full font-bold text-base md:text-lg text-slate-900 bg-white dark:bg-slate-800/90 hover:bg-white dark:bg-slate-800 transition-all duration-300 text-center shadow-lg hover:scale-105">
+                                            Our Willow Selection
+                                        </Link>
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    );
+
+                    return (
+                        <div 
+                            key={banner.id || index}
+                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                                currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                            }`}
+                        >
+                            {!hasText && banner.link ? (
+                                <Link href={banner.link} className="block w-full h-full relative z-10">
+                                    {slideContent}
+                                </Link>
+                            ) : (
+                                slideContent
+                            )}
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
 
                 {/* Clean White Slider Arrows (Only show if multiple slides) */}
                 {displayBanners.length > 1 && (
