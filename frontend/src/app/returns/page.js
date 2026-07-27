@@ -1,32 +1,44 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import EcommerceLayout from '@/layouts/EcommerceLayout';
 import { Head } from '@/lib/inertia-compat';
-import { RefreshCcw } from 'lucide-react';
+import api from '@/lib/api';
+import { Loader2 } from 'lucide-react';
 
 export default function ReturnsPage() {
+    const [pageData, setPageData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPage = async () => {
+            try {
+                const res = await api.get('/api/pages/returns');
+                setPageData(res.data);
+            } catch (err) {
+                console.error('Failed to fetch returns page', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPage();
+    }, []);
+
     return (
         <EcommerceLayout>
-            <Head title="Returns & Exchanges - Bigbestow" />
+            <Head title={pageData?.meta_title || "Returns & Exchanges - Bigbestow"} />
             <div className="max-w-3xl mx-auto px-4 py-20 min-h-[60vh]">
-                <div className="text-center mb-12">
-                    <RefreshCcw className="w-12 h-12 text-indigo-600 mx-auto mb-4" />
-                    <h1 className="text-4xl font-black text-gray-900">Returns & Exchanges</h1>
-                </div>
-                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 prose prose-indigo">
-                    <h3>30-Day Return Policy</h3>
-                    <p>We want you to love what you ordered. If you&apos;re not completely satisfied, you can return most items within 30 days of receipt for a refund or exchange.</p>
-                    
-                    <h3>How to Return an Item</h3>
-                    <ol className="space-y-2 mt-4 text-gray-600">
-                        <li>Log into your account and navigate to Order History.</li>
-                        <li>Select the item(s) you wish to return and state the reason.</li>
-                        <li>Print the prepaid return shipping label.</li>
-                        <li>Pack your items securely and attach the label.</li>
-                        <li>Drop off the package at any authorized shipping center.</li>
-                    </ol>
-                </div>
+                {loading ? (
+                    <div className="flex justify-center items-center h-48">
+                        <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+                    </div>
+                ) : pageData?.content ? (
+                    <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+                ) : (
+                    <div className="text-center">
+                        <p>Content is being updated. Please check back later.</p>
+                    </div>
+                )}
             </div>
         </EcommerceLayout>
     );

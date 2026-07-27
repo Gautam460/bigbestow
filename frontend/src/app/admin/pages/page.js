@@ -5,6 +5,9 @@ import { Head } from '@/lib/inertia-compat';
 import { FileText, Plus, Edit2, Trash2, Search, X, Loader2 } from 'lucide-react';
 import api from '@/lib/api';
 import { toast } from 'sonner';
+import dynamic from 'next/dynamic';
+
+const CKEditor = dynamic(() => import('@/components/CKEditorWrapper'), { ssr: false });
 
 export default function AdminPagesPage() {
     const [pages, setPages] = useState([]);
@@ -207,13 +210,10 @@ export default function AdminPagesPage() {
 
                             <div>
                                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Content (HTML allowed)</label>
-                                <textarea
+                                <CKEditor
                                     value={content}
-                                    onChange={(e) => setContent(e.target.value)}
-                                    rows="15"
-                                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono text-sm"
-                                    placeholder="<p>Welcome to our store...</p>"
-                                ></textarea>
+                                    onChange={(data) => setContent(data)}
+                                />
                             </div>
 
                             <div className="flex items-center gap-2">

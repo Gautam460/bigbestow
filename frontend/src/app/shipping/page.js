@@ -1,17 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GenericPage from '@/components/GenericPage';
+import api from '@/lib/api';
+import { Loader2 } from 'lucide-react';
 
 export default function ShippingPage() {
+    const [pageData, setPageData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPage = async () => {
+            try {
+                const res = await api.get('/api/pages/shipping');
+                setPageData(res.data);
+            } catch (err) {
+                console.error('Failed to fetch shipping page', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPage();
+    }, []);
+
+    if (loading) {
+        return (
+            <GenericPage title="Shipping Information">
+                <div className="flex justify-center items-center h-32">
+                    <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+                </div>
+            </GenericPage>
+        );
+    }
+
     return (
-        <GenericPage title="Shipping Information">
-            <h3>Standard Shipping</h3>
-            <p>We offer free standard shipping on all orders over ₹5,000. For orders under ₹5,000, a flat rate of ₹250 applies. Standard shipping takes 5-7 business days.</p>
-            <h3>Express Shipping</h3>
-            <p>Need it faster? Select Express Shipping at checkout for ₹500. Your order will arrive in 2-3 business days.</p>
-            <h3>International Shipping</h3>
-            <p>We ship to over 50 countries globally. International shipping rates are calculated at checkout based on destination and package weight.</p>
+        <GenericPage title={pageData?.title || "Shipping Information"}>
+            {pageData?.content ? (
+                <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+            ) : (
+                <p>Content is being updated. Please check back later.</p>
+            )}
         </GenericPage>
     );
 }
