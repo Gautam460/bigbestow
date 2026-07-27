@@ -31,6 +31,7 @@ Route::post('/coupons/apply', [FrontendApiController::class, 'applyCoupon']);
 Route::post('/checkout/order', [FrontendApiController::class, 'placeOrder']);
 Route::get('/orders/success/{id}', [FrontendApiController::class, 'orderSuccess']);
 Route::get('/settings', [AdminSettingsController::class, 'public']);
+Route::get('/pages/{slug}', [\App\Http\Controllers\Api\PageController::class, 'show']);
 Route::post('/subscribe', function (Request $request) {
     $request->validate(['email' => 'required|email']);
     \App\Models\Subscriber::firstOrCreate(['email' => $request->email]);
@@ -110,6 +111,8 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::apiResource('subscribers', AdminSubscriberController::class)->only(['index', 'destroy']);
 
     Route::apiResource('contact-queries', AdminContactQueryController::class)->only(['index', 'destroy']);
+
+    Route::apiResource('pages', App\Http\Controllers\Api\AdminPageController::class);
 
     Route::get('/inventory', [InventoryController::class, 'index']);
     Route::put('/inventory/{product}', [InventoryController::class, 'update']);

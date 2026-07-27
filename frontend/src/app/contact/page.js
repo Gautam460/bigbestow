@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EcommerceLayout from '@/layouts/EcommerceLayout';
 import { Head } from '@/lib/inertia-compat';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Clock, MessageCircle, Loader2 } from 'lucide-react';
@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 export default function ContactPage() {
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [pageData, setPageData] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -17,6 +18,18 @@ export default function ContactPage() {
         subject: '',
         comment: ''
     });
+
+    useEffect(() => {
+        const fetchPage = async () => {
+            try {
+                const res = await api.get('/api/pages/contact');
+                setPageData(res.data);
+            } catch (err) {
+                console.error('Failed to fetch contact page content', err);
+            }
+        };
+        fetchPage();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -39,7 +52,7 @@ export default function ContactPage() {
 
     return (
         <EcommerceLayout>
-            <Head title="Contact Us - Bigbestow" />
+            <Head title={pageData?.meta_title || "Contact Us - Bigbestow"} />
 
             {/* Header Banner */}
             <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 py-16 text-white text-center relative overflow-hidden">
@@ -49,15 +62,18 @@ export default function ContactPage() {
                         We&apos;re Here To Help
                     </span>
                     <h1 className="text-4xl md:text-5xl font-black italic tracking-tight">
-                        Contact <span className="text-yellow-400">Bigbestow</span>
+                        {pageData?.title ? pageData.title : <>Contact <span className="text-yellow-400">Bigbestow</span></>}
                     </h1>
-                    <p className="text-slate-300 mt-4 text-base md:text-lg">
-                        Have questions about our professional English & Kashmir willow cricket equipment or order status? Reach out to our dedicated expert support team.
-                    </p>
                 </div>
             </div>
 
-            <div className="max-w-6xl mx-auto px-4 py-16">
+            <div className="max-w-6xl mx-auto px-4 py-8">
+                {pageData?.content && (
+                    <div 
+                        className="prose prose-lg dark:prose-invert prose-indigo max-w-none mb-12"
+                        dangerouslySetInnerHTML={{ __html: pageData.content }}
+                    />
+                )}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
                     {/* Left Info Column */}

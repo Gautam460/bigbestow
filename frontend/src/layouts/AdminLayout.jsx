@@ -30,7 +30,8 @@ import {
     ExternalLink,
     CheckCircle,
     AlertCircle,
-    Globe
+    Globe,
+    FileText
 } from 'lucide-react';
 
 export default function AdminLayout({ children }) {
@@ -71,6 +72,7 @@ export default function AdminLayout({ children }) {
         { name: 'Customers & Users', href: '/admin/users', icon: Users, category: 'Users' },
         { name: 'Contact Queries', href: '/admin/queries', icon: MessageSquare, category: 'Users' },
         { name: 'Banners & Offers', href: '/admin/banners', icon: ImageIcon, category: 'Marketing' },
+        { name: 'CMS Pages', href: '/admin/pages', icon: FileText, category: 'Marketing' },
         { name: 'Subscribers', href: '/admin/subscribers', icon: Mail, category: 'Marketing' },
         { name: 'Roles & Permissions', href: '/admin/permissions', icon: ShieldCheck, category: 'System' },
         { name: 'Store Settings', href: '/admin/settings', icon: Settings, category: 'System' },

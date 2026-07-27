@@ -1,18 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GenericPage from '@/components/GenericPage';
+import api from '@/lib/api';
+import { Loader2 } from 'lucide-react';
 
 export default function TermsPage() {
+    const [pageData, setPageData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPage = async () => {
+            try {
+                const res = await api.get('/api/pages/terms');
+                setPageData(res.data);
+            } catch (err) {
+                console.error('Failed to fetch terms page', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPage();
+    }, []);
+
+    if (loading) {
+        return (
+            <GenericPage title="Terms of Service">
+                <div className="flex justify-center items-center h-32">
+                    <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+                </div>
+            </GenericPage>
+        );
+    }
+
     return (
-        <GenericPage title="Terms of Service">
-            <p className="text-sm text-gray-500 dark:text-slate-400 mb-6">Last updated: January 1, 2026</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-6 mb-2">1. Introduction</h3>
-            <p className="mb-4 text-black dark:text-white">Welcome to Bigbestow. By accessing our website, you agree to these Terms of Service. Please read them carefully.</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-6 mb-2">2. Use of Our Service</h3>
-            <p className="mb-4 text-black dark:text-white">You may use our service only as permitted by law. We may suspend or stop providing our service to you if you do not comply with our terms or policies.</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-6 mb-2">3. Purchases</h3>
-            <p className="mb-4 text-black dark:text-white">If you wish to purchase any product made available through the service, you may be asked to supply certain information relevant to your purchase.</p>
+        <GenericPage title={pageData?.title || "Terms of Service"}>
+            {pageData?.content ? (
+                <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+            ) : (
+                <p>Content is being updated. Please check back later.</p>
+            )}
         </GenericPage>
     );
 }

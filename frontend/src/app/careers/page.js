@@ -1,19 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GenericPage from '@/components/GenericPage';
+import api from '@/lib/api';
+import { Loader2 } from 'lucide-react';
 
 export default function CareersPage() {
+    const [pageData, setPageData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPage = async () => {
+            try {
+                const res = await api.get('/api/pages/careers');
+                setPageData(res.data);
+            } catch (err) {
+                console.error('Failed to fetch careers page', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPage();
+    }, []);
+
+    if (loading) {
+        return (
+            <GenericPage title="Careers at Bigbestow">
+                <div className="flex justify-center items-center h-32">
+                    <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+                </div>
+            </GenericPage>
+        );
+    }
+
     return (
-        <GenericPage title="Careers at Bigbestow">
-            <p className="text-lg text-gray-700 mb-6 font-medium">Join our mission to redefine modern shopping and lifestyle experiences.</p>
-            <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Open Positions</h3>
-            <ul className="list-disc pl-6 space-y-3 mb-8 text-black">
-                <li className="text-black"><strong className="font-semibold text-indigo-600">Senior Frontend Engineer</strong> (React/Next.js) - Remote</li>
-                <li className="text-black"><strong className="font-semibold text-indigo-600">E-Commerce Category Manager</strong> - New Delhi, IN</li>
-                <li className="text-black"><strong className="font-semibold text-indigo-600">Customer Experience Specialist</strong> - Remote</li>
-            </ul>
-            <p className="text-gray-800 mt-6">Don&apos;t see a role that fits? Send your resume to <a href="mailto:careers@bigbestow.com" className="text-indigo-600 font-bold underline hover:text-indigo-800">careers@bigbestow.com</a> and we&apos;ll keep you in mind for future opportunities.</p>
+        <GenericPage title={pageData?.title || "Careers at Bigbestow"}>
+            {pageData?.content ? (
+                <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+            ) : (
+                <p>Content is being updated. Please check back later.</p>
+            )}
         </GenericPage>
     );
 }

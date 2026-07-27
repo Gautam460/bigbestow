@@ -1,18 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import GenericPage from '@/components/GenericPage';
+import api from '@/lib/api';
+import { Loader2 } from 'lucide-react';
 
 export default function PrivacyPage() {
+    const [pageData, setPageData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPage = async () => {
+            try {
+                const res = await api.get('/api/pages/privacy');
+                setPageData(res.data);
+            } catch (err) {
+                console.error('Failed to fetch privacy page', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchPage();
+    }, []);
+
+    if (loading) {
+        return (
+            <GenericPage title="Privacy Policy">
+                <div className="flex justify-center items-center h-32">
+                    <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
+                </div>
+            </GenericPage>
+        );
+    }
+
     return (
-        <GenericPage title="Privacy Policy">
-            <p className="text-sm text-gray-500 dark:text-slate-400 mb-6">Last updated: January 1, 2026</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-6 mb-2">1. Information We Collect</h3>
-            <p className="mb-4 text-black dark:text-white">We collect information to provide better services to our users. This includes basic details like your IP address, to more personalized details like which products you browse most often.</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-6 mb-2">2. How We Use Information</h3>
-            <p className="mb-4 text-black dark:text-white">We use the information we collect to provide, maintain, protect and improve our services, to develop new ones, and to protect Bigbestow and our customers.</p>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-6 mb-2">3. Information Sharing</h3>
-            <p className="mb-4 text-black dark:text-white">We do not share personal information with companies, organizations and individuals outside of Bigbestow unless one of the following circumstances applies: with your explicit consent, for legal compliance, or for secure payment fulfillment.</p>
+        <GenericPage title={pageData?.title || "Privacy Policy"}>
+            {pageData?.content ? (
+                <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+            ) : (
+                <p>Content is being updated. Please check back later.</p>
+            )}
         </GenericPage>
     );
 }
