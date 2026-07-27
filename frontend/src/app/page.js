@@ -101,7 +101,7 @@ export default function Home(initialProps = {}) {
             <div className="relative bg-slate-100 text-white overflow-hidden min-h-[75vh] md:min-h-[82vh] flex items-center group">
                 {/* Slides */}
                 {displayBanners.map((banner, index) => {
-                    const hasText = banner.title || banner.id === 'default-1';
+                    const hasText = !!banner.title;
                     
                     const slideContent = (
                         <>
@@ -118,34 +118,20 @@ export default function Home(initialProps = {}) {
                             </div>
                             
                             {hasText && (
-                                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36 flex flex-col items-start justify-center min-h-[75vh] md:min-h-[82vh]">
-                                    <div className="inline-block px-4 py-1.5 rounded-full bg-white dark:bg-slate-800/90 text-indigo-700 font-bold text-xs md:text-sm mb-6 shadow-md border border-white/40">
-                                        🏏 Official Equipment for Champions
-                                    </div>
-                                    <h1 className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight mb-6 max-w-2xl text-white drop-shadow-md">
-                                        {banner.title ? (
-                                            <span>{banner.title}</span>
-                                        ) : (
-                                            <>
-                                                Power. Precision. <br />
-                                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-400">Bigbestow Performance.</span>
-                                            </>
-                                        )}
+                                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36 flex flex-col items-start justify-center min-h-[75vh] md:min-h-[82vh] pointer-events-none">
+                                    <h1 className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight mb-6 max-w-2xl text-white drop-shadow-md pointer-events-auto">
+                                        <span>{banner.title}</span>
                                     </h1>
-                                    <p className="text-lg md:text-xl text-slate-100 mb-10 max-w-xl leading-relaxed drop-shadow font-medium">
-                                        {banner.subtitle || 'Hand-selected English and Kashmir Willow bats crafted for the modern cricketer. Elevate your game with professional-grade gear.'}
-                                    </p>
-                                    <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                                        <Link 
-                                            href={banner.link || '/products'} 
-                                            className="group/btn flex items-center justify-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95"
-                                        >
-                                            Shop Collection
-                                            <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                                        </Link>
-                                        <Link href="/about" className="px-8 py-4 rounded-full font-bold text-base md:text-lg text-slate-900 bg-white dark:bg-slate-800/90 hover:bg-white dark:bg-slate-800 transition-all duration-300 text-center shadow-lg hover:scale-105">
-                                            Our Willow Selection
-                                        </Link>
+                                    <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pointer-events-auto">
+                                        {banner.link && (
+                                            <Link 
+                                                href={banner.link} 
+                                                className="group/btn flex items-center justify-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95"
+                                            >
+                                                Shop Collection
+                                                <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                                            </Link>
+                                        )}
                                     </div>
                                 </div>
                             )}
