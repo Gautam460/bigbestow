@@ -14,7 +14,7 @@ export default function FAQPage() {
         const fetchPage = async () => {
             try {
                 const res = await api.get('/api/pages/faq');
-                setPageData(res.data);
+                setPageData(res);
             } catch (err) {
                 console.error('Failed to fetch faq page', err);
             } finally {
@@ -33,7 +33,8 @@ export default function FAQPage() {
                         <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
                     </div>
                 ) : pageData?.content ? (
-                    <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+                    <div className="prose prose-indigo max-w-none dark:prose-invert p-6 sm:p-10 mx-auto"
+                    dangerouslySetInnerHTML={{ __html: pageData.content }} />
                 ) : (
                     <div className="text-center">
                         <p>Content is being updated. Please check back later.</p>

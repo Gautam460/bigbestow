@@ -23,7 +23,7 @@ export default function ContactPage() {
         const fetchPage = async () => {
             try {
                 const res = await api.get('/api/pages/contact');
-                setPageData(res.data);
+                setPageData(res);
             } catch (err) {
                 console.error('Failed to fetch contact page content', err);
             }

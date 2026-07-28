@@ -14,7 +14,7 @@ export default function TrackPage() {
         const fetchPage = async () => {
             try {
                 const res = await api.get('/api/pages/track');
-                setPageData(res.data);
+                setPageData(res);
             } catch (err) {
                 console.error('Failed to fetch track page', err);
             } finally {
@@ -33,7 +33,8 @@ export default function TrackPage() {
                         <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
                     </div>
                 ) : pageData?.content ? (
-                    <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+                    <div className="prose prose-indigo max-w-none dark:prose-invert p-6 sm:p-10 mx-auto"
+                    dangerouslySetInnerHTML={{ __html: pageData.content }} />
                 ) : (
                     <>
                         <h1 className="text-4xl font-black text-gray-900 mb-6">Track Your Order</h1>

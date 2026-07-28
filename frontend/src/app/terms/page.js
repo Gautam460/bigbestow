@@ -13,7 +13,7 @@ export default function TermsPage() {
         const fetchPage = async () => {
             try {
                 const res = await api.get('/api/pages/terms');
-                setPageData(res.data);
+                setPageData(res);
             } catch (err) {
                 console.error('Failed to fetch terms page', err);
             } finally {
@@ -36,7 +36,8 @@ export default function TermsPage() {
     return (
         <GenericPage title={pageData?.title || "Terms of Service"}>
             {pageData?.content ? (
-                <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
+                <div className="prose prose-indigo max-w-none dark:prose-invert p-6 sm:p-10 mx-auto"
+                    dangerouslySetInnerHTML={{ __html: pageData.content }} />
             ) : (
                 <p>Content is being updated. Please check back later.</p>
             )}
