@@ -33,25 +33,7 @@ export default function Home(initialProps = {}) {
         fetchHomeData();
     }, []);
 
-    // Default fallback banner if DB has no active banners yet
-    const defaultBanners = [
-        {
-            id: 'default-1',
-            title: 'Power. Precision. Bigbestow Performance.',
-            image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1920&q=80',
-            link: '/products',
-            subtitle: 'Hand-selected English and Kashmir Willow bats crafted for the modern cricketer. Elevate your game with professional-grade gear.'
-        },
-        {
-            id: 'default-2',
-            title: 'Master The Crease With Pro Grade Willow',
-            image: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1920&q=80',
-            link: '/products?category=english-willow',
-            subtitle: 'Engineered for massive sweet spots and feather-light pickup. Tested by championship athletes worldwide.'
-        }
-    ];
-
-    const displayBanners = (banners && banners.length > 0) ? banners : defaultBanners;
+    const displayBanners = banners || [];
     const [currentSlide, setCurrentSlide] = useState(0);
     const [wishlistIds, setWishlistIds] = useState([]);
 
@@ -98,100 +80,102 @@ export default function Home(initialProps = {}) {
             <Head title="Premium Cricket Bats & Equipment - Bigbestow" />
             
             {/* 1. Clean & Bright Dynamic Hero Section (Slider) */}
-            <div className="relative bg-slate-100 text-white overflow-hidden min-h-[75vh] md:min-h-[82vh] flex items-center group">
-                {/* Slides */}
-                {displayBanners.map((banner, index) => {
-                    const hasText = !!banner.title;
-                    
-                    const slideContent = (
-                        <>
-                            <div className="absolute inset-0 z-0">
-                                <img 
-                                    src={getImgSrc(banner.image_url || banner.image, 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1920&q=80')} 
-                                    alt={banner.title || 'Cricket equipment'} 
-                                    className="w-full h-full object-cover object-center opacity-100 transition-transform duration-1000 ease-out"
-                                />
-                                {/* Soft, clean gradient ONLY on the left side for text legibility, leaving the rest of the image 100% bright and clear */}
+            {displayBanners.length > 0 && (
+                <div className="relative bg-slate-100 text-white overflow-hidden min-h-[75vh] md:min-h-[82vh] flex items-center group">
+                    {/* Slides */}
+                    {displayBanners.map((banner, index) => {
+                        const hasText = !!banner.title;
+                        
+                        const slideContent = (
+                            <>
+                                <div className="absolute inset-0 z-0">
+                                    <img 
+                                        src={getImgSrc(banner.image_url || banner.image, 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1920&q=80')} 
+                                        alt={banner.title || 'Cricket equipment'} 
+                                        className="w-full h-full object-cover object-center opacity-100 transition-transform duration-1000 ease-out"
+                                    />
+                                    {/* Soft, clean gradient ONLY on the left side for text legibility, leaving the rest of the image 100% bright and clear */}
+                                    {hasText && (
+                                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/40 to-transparent w-full md:w-3/4 lg:w-3/5"></div>
+                                    )}
+                                </div>
+                                
                                 {hasText && (
-                                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-900/40 to-transparent w-full md:w-3/4 lg:w-3/5"></div>
+                                    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36 flex flex-col items-start justify-center min-h-[75vh] md:min-h-[82vh] pointer-events-none">
+                                        <h1 className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight mb-6 max-w-2xl text-white drop-shadow-md pointer-events-auto">
+                                            <span>{banner.title}</span>
+                                        </h1>
+                                        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pointer-events-auto">
+                                            {banner.link && (
+                                                <Link 
+                                                    href={banner.link} 
+                                                    className="group/btn flex items-center justify-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95"
+                                                >
+                                                    Shop Collection
+                                                    <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                                                </Link>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </>
+                        );
+
+                        return (
+                            <div 
+                                key={banner.id || index}
+                                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                                    currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                                }`}
+                            >
+                                {!hasText && banner.link ? (
+                                    <Link href={banner.link} className="block w-full h-full relative z-10">
+                                        {slideContent}
+                                    </Link>
+                                ) : (
+                                    slideContent
                                 )}
                             </div>
-                            
-                            {hasText && (
-                                <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36 flex flex-col items-start justify-center min-h-[75vh] md:min-h-[82vh] pointer-events-none">
-                                    <h1 className="text-4xl sm:text-6xl md:text-7xl font-black leading-tight mb-6 max-w-2xl text-white drop-shadow-md pointer-events-auto">
-                                        <span>{banner.title}</span>
-                                    </h1>
-                                    <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pointer-events-auto">
-                                        {banner.link && (
-                                            <Link 
-                                                href={banner.link} 
-                                                className="group/btn flex items-center justify-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-full font-bold text-base md:text-lg hover:bg-indigo-700 transition-all duration-300 shadow-xl shadow-indigo-600/20 hover:scale-105 active:scale-95"
-                                            >
-                                                Shop Collection
-                                                <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-                                            </Link>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                        </>
-                    );
+                        );
+                    })}
 
-                    return (
-                        <div 
-                            key={banner.id || index}
-                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                                currentSlide === index ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
-                            }`}
-                        >
-                            {!hasText && banner.link ? (
-                                <Link href={banner.link} className="block w-full h-full relative z-10">
-                                    {slideContent}
-                                </Link>
-                            ) : (
-                                slideContent
-                            )}
-                        </div>
-                    );
-                })}
-
-                {/* Clean White Slider Arrows (Only show if multiple slides) */}
-                {displayBanners.length > 1 && (
-                    <>
-                        <button
-                            onClick={prevSlide}
-                            className="absolute left-4 md:left-8 z-20 p-3 rounded-full bg-white dark:bg-slate-800/80 hover:bg-white dark:bg-slate-800 text-slate-900 shadow-xl border border-gray-200 dark:border-slate-600 transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
-                            aria-label="Previous slide"
-                        >
-                            <ChevronLeft className="w-6 h-6" />
-                        </button>
-                        <button
-                            onClick={nextSlide}
-                            className="absolute right-4 md:right-8 z-20 p-3 rounded-full bg-white dark:bg-slate-800/80 hover:bg-white dark:bg-slate-800 text-slate-900 shadow-xl border border-gray-200 dark:border-slate-600 transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
-                            aria-label="Next slide"
-                        >
-                            <ChevronRight className="w-6 h-6" />
-                        </button>
-                    </>
-                )}
-
-                {/* Clean Slider Dots */}
-                {displayBanners.length > 1 && (
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5 bg-white dark:bg-slate-800/80 px-4 py-2 rounded-full shadow-lg border border-gray-200 dark:border-slate-600/50 backdrop-blur-md">
-                        {displayBanners.map((_, index) => (
+                    {/* Clean White Slider Arrows (Only show if multiple slides) */}
+                    {displayBanners.length > 1 && (
+                        <>
                             <button
-                                key={index}
-                                onClick={() => setCurrentSlide(index)}
-                                className={`h-2.5 rounded-full transition-all duration-500 ${
-                                    index === currentSlide ? 'w-8 bg-indigo-600' : 'w-2.5 bg-gray-300 hover:bg-gray-400'
-                                }`}
-                                aria-label={`Go to slide ${index + 1}`}
-                            />
-                        ))}
-                    </div>
-                )}
-            </div>
+                                onClick={prevSlide}
+                                className="absolute left-4 md:left-8 z-20 p-3 rounded-full bg-white dark:bg-slate-800/80 hover:bg-white dark:bg-slate-800 text-slate-900 shadow-xl border border-gray-200 dark:border-slate-600 transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+                                aria-label="Previous slide"
+                            >
+                                <ChevronLeft className="w-6 h-6" />
+                            </button>
+                            <button
+                                onClick={nextSlide}
+                                className="absolute right-4 md:right-8 z-20 p-3 rounded-full bg-white dark:bg-slate-800/80 hover:bg-white dark:bg-slate-800 text-slate-900 shadow-xl border border-gray-200 dark:border-slate-600 transition-all opacity-0 group-hover:opacity-100 hover:scale-110"
+                                aria-label="Next slide"
+                            >
+                                <ChevronRight className="w-6 h-6" />
+                            </button>
+                        </>
+                    )}
+
+                    {/* Clean Slider Dots */}
+                    {displayBanners.length > 1 && (
+                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5 bg-white dark:bg-slate-800/80 px-4 py-2 rounded-full shadow-lg border border-gray-200 dark:border-slate-600/50 backdrop-blur-md">
+                            {displayBanners.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentSlide(index)}
+                                    className={`h-2.5 rounded-full transition-all duration-500 ${
+                                        index === currentSlide ? 'w-8 bg-indigo-600' : 'w-2.5 bg-gray-300 hover:bg-gray-400'
+                                    }`}
+                                    aria-label={`Go to slide ${index + 1}`}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )}
 
             {/* 2. Trust Badges */}
             <div className="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800">
@@ -347,9 +331,23 @@ export default function Home(initialProps = {}) {
                                             <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-lg leading-tight line-clamp-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{product.name}</h3>
                                         </Link>
                                         <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 mb-3">{product.description}</p>
+                                        {product.sizes && Array.isArray(product.sizes) && product.sizes.length > 0 && (
+                                            <div className="flex flex-wrap gap-1 mb-2">
+                                                {product.sizes.map((size) => (
+                                                    <span key={size} className="text-[10px] px-2 py-0.5 bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 rounded border border-gray-200 dark:border-slate-700">
+                                                        {size}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
-                                    <div className="text-2xl font-black text-gray-900 dark:text-white mt-2 pt-2 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between">
-                                        <span>₹{product.price}</span>
+                                    <div className="mt-2 pt-2 border-t border-gray-100 dark:border-slate-700 flex items-center justify-between">
+                                        <div className="flex flex-col">
+                                            {/* {product.original_price && Number(product.original_price) > 0 && Number(product.original_price) > Number(product.price) && (
+                                                <span className="text-xs text-gray-400 line-through font-semibold">₹{product.original_price}</span>
+                                            )} */}
+                                            <span className="text-2xl font-black text-gray-900 dark:text-white">₹{product.price}</span>
+                                        </div>
                                         <Link href={`/products/${product.slug || product.id}`} className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">View details</Link>
                                     </div>
                                 </div>

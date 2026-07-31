@@ -43,11 +43,15 @@ class FrontendApiController extends Controller
 
         if ($request->filled('category') && $request->category !== 'all') {
             $catSlug = $request->category;
-            $query->whereHas('category', function ($q) use ($catSlug) {
-                $q->where('slug', $catSlug)
-                    ->orWhere('id', $catSlug)
-                    ->orWhere('name', 'like', "%{$catSlug}%");
-            });
+            if ($catSlug === 'sale') {
+                $query->where('is_sale', true);
+            } else {
+                $query->whereHas('category', function ($q) use ($catSlug) {
+                    $q->where('slug', $catSlug)
+                        ->orWhere('id', $catSlug)
+                        ->orWhere('name', 'like', "%{$catSlug}%");
+                });
+            }
         }
 
         if ($request->filled('subcategory') && $request->subcategory !== 'all') {
@@ -151,6 +155,7 @@ class FrontendApiController extends Controller
 
     public function placeOrder(Request $request)
     {
+        \Log::info('Checkout items received before validation: ', $request->input('items') ?? []);
         $validated = $request->validate([
             'customer_name' => 'required|string|max:255',
             'customer_email' => 'required|email|max:255',
@@ -166,6 +171,8 @@ class FrontendApiController extends Controller
             'items.*.price' => 'required|numeric|min:0',
             'items.*.name' => 'required|string',
         ]);
+
+        \Log::info('Checkout items received: ', $request->input('items'));
 
         return DB::transaction(function () use ($validated) {
             $totalAmount = 0;

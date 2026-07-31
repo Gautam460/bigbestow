@@ -24,7 +24,7 @@ export default function DashboardPage() {
     }, []);
 
     useEffect(() => {
-        api.get('/api/orders').then(res => {
+        api.get('/api/user/orders').then(res => {
             if (Array.isArray(res)) setOrders(res);
             else if (res && Array.isArray(res.data)) setOrders(res.data);
             else if (res && Array.isArray(res.orders)) setOrders(res.orders);

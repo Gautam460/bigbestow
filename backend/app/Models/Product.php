@@ -10,7 +10,9 @@ class Product extends Model
 
     protected $casts = [
         'gallery' => 'array',
+        'sizes' => 'array',
         'status'  => 'boolean',
+        'is_sale' => 'boolean',
     ];
 
     protected $appends = ['image_url'];

@@ -24,6 +24,9 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'images.*' => 'image|max:51200', // Validate each image up to 50MB
+            'sizes' => 'nullable|array',
+            'is_sale' => 'nullable|boolean',
+            'original_price' => 'nullable|numeric|min:0',
         ]);
 
         $gallery = $request->input('existing_images', []);
@@ -37,7 +40,7 @@ class ProductController extends Controller
             }
         }
             
-        $imagePath = count($gallery) > 0 ? $gallery[0] : 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=800';
+        $imagePath = count($gallery) > 0 ? $gallery[0] : null;
 
         $product = Product::create([
             'name' => $validated['name'],
@@ -49,6 +52,9 @@ class ProductController extends Controller
             'description' => $validated['description'] ?? '',
             'image' => $imagePath,
             'gallery' => $gallery,
+            'sizes' => $validated['sizes'] ?? [],
+            'is_sale' => $validated['is_sale'] ?? false,
+            'original_price' => $validated['original_price'] ?? null,
         ]);
 
         return response()->json($product->load(['category', 'subcategory']), 201);
@@ -69,6 +75,9 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'images.*' => 'image|max:51200', // Validate each image up to 50MB
+            'sizes' => 'nullable|array',
+            'is_sale' => 'nullable|boolean',
+            'original_price' => 'nullable|numeric|min:0',
         ]);
 
         $gallery = $request->input('existing_images', []);
@@ -81,7 +90,7 @@ class ProductController extends Controller
             }
         }
         
-        $imagePath = count($gallery) > 0 ? $gallery[0] : 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=800';
+        $imagePath = count($gallery) > 0 ? $gallery[0] : null;
 
         $product->update([
             'name' => $validated['name'],
@@ -92,6 +101,9 @@ class ProductController extends Controller
             'description' => $validated['description'] ?? '',
             'image' => $imagePath,
             'gallery' => $gallery,
+            'sizes' => $validated['sizes'] ?? [],
+            'is_sale' => $validated['is_sale'] ?? false,
+            'original_price' => $validated['original_price'] ?? null,
         ]);
 
         return response()->json($product->load(['category', 'subcategory']));

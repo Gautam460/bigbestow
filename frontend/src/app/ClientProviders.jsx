@@ -15,7 +15,7 @@ export default function ClientProviders({ children }) {
         <AppProvider>
             <TooltipProvider delayDuration={0}>
                 {children}
-                <Toaster position="top-right" richColors />
+                <Toaster position="top-right" richColors closeButton />
             </TooltipProvider>
         </AppProvider>
     );

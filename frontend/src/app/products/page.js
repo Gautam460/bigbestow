@@ -196,12 +196,26 @@ function ProductsContent() {
                                         <Link href={`/products/${product.slug || product.id}`}>
                                             <h3 className="font-bold text-gray-800 dark:text-white mb-1 truncate text-lg hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{product.name}</h3>
                                         </Link>
-                                        <p className="text-xs text-gray-500 dark:text-slate-400 line-clamp-2 mb-3">{product.description}</p>
+                                        <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2 mb-3">{product.description}</p>
+                                        {product.sizes && Array.isArray(product.sizes) && product.sizes.length > 0 && (
+                                            <div className="flex flex-wrap gap-1 mb-2">
+                                                {product.sizes.map((size) => (
+                                                    <span key={size} className="text-[10px] px-2 py-0.5 bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400 rounded border border-gray-200 dark:border-slate-700">
+                                                        {size}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="p-4 pt-0">
                                     <div className="flex justify-between items-center pt-3 border-t border-gray-100 dark:border-slate-700">
-                                        <span className="text-xl font-black text-gray-900 dark:text-white">₹{product.price}</span>
+                                        <div className="flex flex-col">
+                                            {/* {product.original_price && Number(product.original_price) > 0 && Number(product.original_price) > Number(product.price) && (
+                                                <span className="text-xs text-gray-400 line-through font-semibold">₹{product.original_price}</span>
+                                            )} */}
+                                            <span className="text-xl font-black text-gray-900 dark:text-white">₹{product.price}</span>
+                                        </div>
                                         <button
                                             onClick={(e) => {
                                                 e.preventDefault();

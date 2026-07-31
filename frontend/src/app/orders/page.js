@@ -14,7 +14,7 @@ export default function OrdersPage() {
 
     const fetchOrders = () => {
         setLoading(true);
-        api.get('/api/orders').then(res => {
+        api.get('/api/user/orders').then(res => {
             if (Array.isArray(res)) setOrders(res);
             else if (res && Array.isArray(res.data)) setOrders(res.data);
             else if (res && Array.isArray(res.orders)) setOrders(res.orders);
@@ -33,7 +33,7 @@ export default function OrdersPage() {
     const handleCancelOrder = async (orderId) => {
         if (confirm(`Are you sure you want to cancel Order #ORD-${orderId}?`)) {
             try {
-                await api.post(`/api/orders/${orderId}/cancel`);
+                await api.post(`/api/user/orders/${orderId}/cancel`);
                 toast.success(`Order #ORD-${orderId} has been cancelled.`);
                 fetchOrders();
             } catch (err) {

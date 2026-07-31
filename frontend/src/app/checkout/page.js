@@ -111,8 +111,20 @@ export default function CheckoutPage() {
             }
         } catch (err) {
             if (err?.response?.status === 422) {
-                setErrors(err.response.data.errors || {});
-                toast.error('Please check the form for errors and try again.');
+                const responseErrors = err.response.data.errors || {};
+                setErrors(responseErrors);
+                
+                // Check if the error is related to invalid product IDs
+                const hasInvalidProduct = Object.keys(responseErrors).some(key => key.match(/items\.\d+\.id/));
+                if (hasInvalidProduct) {
+                    toast.error('Some items in your cart are no longer available in our store. We have cleared your cart.');
+                    clearCart();
+                    setTimeout(() => {
+                        router.push('/products');
+                    }, 2000);
+                } else {
+                    toast.error('Please check the form for errors and try again.');
+                }
             } else {
                 toast.error(err?.response?.data?.message || 'Something went wrong while placing your order.');
             }

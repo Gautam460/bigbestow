@@ -43,7 +43,7 @@ export default function ProductDetailPage() {
     const [quantity, setQuantity] = useState(1);
     const [isZoomed, setIsZoomed] = useState(false);
     const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
-    const [selectedSize, setSelectedSize] = useState('SH (Short Handle)');
+    const [selectedSize, setSelectedSize] = useState('');
     const [wishlistIds, setWishlistIds] = useState([]);
 
     useEffect(() => {
@@ -52,6 +52,12 @@ export default function ProductDetailPage() {
                 ? Array.from(new Set([product.image, ...product.gallery].filter(Boolean)))
                 : (product.image ? [product.image] : ['https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=1200&q=80']);
             setSelectedImage(gal[0]);
+            
+            if (product.sizes && Array.isArray(product.sizes) && product.sizes.length > 0) {
+                setSelectedSize(product.sizes[0]);
+            } else {
+                setSelectedSize('');
+            }
         }
     }, [product]);
 
@@ -73,13 +79,13 @@ export default function ProductDetailPage() {
 
     const handleAddToCart = () => {
         if (!product) return;
-        addToCart(product, quantity, { size: selectedSize });
+        addToCart(product, quantity, selectedSize ? { size: selectedSize } : {});
         toast.success(`${quantity}x ${product.name} added to your cart!`);
     };
 
     const handleBuyNow = () => {
         if (!product) return;
-        addToCart(product, quantity, { size: selectedSize });
+        addToCart(product, quantity, selectedSize ? { size: selectedSize } : {});
         router.push('/checkout');
     };
 
@@ -219,10 +225,18 @@ export default function ProductDetailPage() {
                             </h1>
 
                             {/* Price */}
-                            <div className="flex items-baseline gap-4 mb-6 pb-6 border-b border-gray-100 dark:border-slate-700">
+                            <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-gray-100 dark:border-slate-700">
+                                {/* {product.original_price && Number(product.original_price) > 0 && Number(product.original_price) > Number(product.price) && (
+                                    <>
+                                        <span className="text-xl text-gray-400 line-through font-semibold">₹{product.original_price}</span>
+                                    </>
+                                )} */}
                                 <span className="text-4xl font-black text-gray-900 dark:text-white">₹{product.price}</span>
-                                <span className="text-lg text-gray-400 line-through font-semibold">₹{(Number(product.price) * 1.25).toFixed(2)}</span>
-                                <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-md">20% OFF</span>
+                                {/* {product.original_price && Number(product.original_price) > 0 && Number(product.original_price) > Number(product.price) && (
+                                    <span className="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-md ml-2">
+                                        {Math.round(((Number(product.original_price) - Number(product.price)) / Number(product.original_price)) * 100)}% OFF
+                                    </span>
+                                )} */}
                             </div>
 
                             {/* Description */}
@@ -244,6 +258,30 @@ export default function ProductDetailPage() {
                                     <div><span className="text-gray-400">Weight:</span> <span className="font-semibold text-gray-800 dark:text-slate-100">1140g - 1180g</span></div>
                                 </div>
                             </div>
+
+                            {/* Sizes Selection */}
+                            {product.sizes && Array.isArray(product.sizes) && product.sizes.length > 0 && (
+                                <div className="mb-8">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <span className="text-xs font-black text-gray-700 dark:text-slate-300 uppercase tracking-wider">Select Size:</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {product.sizes.map(size => (
+                                            <button
+                                                key={size}
+                                                onClick={() => setSelectedSize(size)}
+                                                className={`px-5 py-2.5 rounded-xl text-sm font-bold border-2 transition-all ${
+                                                    selectedSize === size
+                                                        ? 'border-indigo-600 bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300'
+                                                        : 'border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-500'
+                                                }`}
+                                            >
+                                                {size}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Quantity & Buy Buttons */}

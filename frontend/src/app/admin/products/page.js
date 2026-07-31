@@ -24,8 +24,11 @@ export default function AdminProductsPage() {
         subcategory_id: '',
         price: '',
         stock: '',
-        images: ['https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=800'],
+        images: [],
         description: '',
+        sizes: '',
+        is_sale: false,
+        original_price: '',
     });
 
     const fetchData = async () => {
@@ -62,8 +65,11 @@ export default function AdminProductsPage() {
             subcategory_id: '',
             price: '',
             stock: '',
-            images: ['https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=800'],
+            images: [],
             description: '',
+            sizes: '',
+            is_sale: false,
+            original_price: '',
         });
         setEditingProduct(null);
         setIsAddModalOpen(true);
@@ -77,8 +83,11 @@ export default function AdminProductsPage() {
             subcategory_id: p.subcategory_id || '',
             price: p.price || '',
             stock: p.stock || '',
-            images: p.gallery?.length ? p.gallery : (p.image ? [p.image] : ['https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=800']),
+            images: p.gallery?.length ? p.gallery : (p.image ? [p.image] : []),
             description: p.description || '',
+            sizes: p.sizes ? (Array.isArray(p.sizes) ? p.sizes.join(', ') : p.sizes) : '',
+            is_sale: !!p.is_sale,
+            original_price: p.original_price || '',
         });
         setEditingProduct(p);
         setIsAddModalOpen(true);
@@ -104,6 +113,15 @@ export default function AdminProductsPage() {
         payload.append('stock', formData.stock);
         if (formData.description) {
             payload.append('description', formData.description);
+        }
+        if (formData.sizes) {
+            formData.sizes.split(',').map(s => s.trim()).filter(s => s).forEach(size => {
+                payload.append('sizes[]', size);
+            });
+        }
+        payload.append('is_sale', formData.is_sale ? 1 : 0);
+        if (formData.original_price) {
+            payload.append('original_price', formData.original_price);
         }
         
         const existing = formData.images.filter(img => typeof img === 'string');
@@ -226,11 +244,17 @@ export default function AdminProductsPage() {
                                                 )}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 font-black text-slate-900 dark:text-white">₹{p.price}</td>
+                                        <td className="px-6 py-4">
+                                            {/* {p.original_price && Number(p.original_price) > 0 && Number(p.original_price) > Number(p.price) && (
+                                                <div className="text-xs text-slate-400 dark:text-slate-500 line-through">₹{p.original_price}</div>
+                                            )} */}
+                                            <div className="font-black text-slate-900 dark:text-white">₹{p.price}</div>
+                                        </td>
                                         <td className="px-6 py-4">
                                             <span className={`px-2.5 py-1 rounded-lg text-xs font-bold ${p.stock > 10 ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'}`}>
                                                 {p.stock} units
                                             </span>
+                                            {/* {p.is_sale && <span className="ml-2 px-2 py-1 bg-red-100 text-red-600 rounded text-[10px] font-bold uppercase tracking-wider">Sale</span>} */}
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <div className="flex items-center justify-end gap-2">
@@ -265,8 +289,12 @@ export default function AdminProductsPage() {
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
+                                {/* <div>
+                                    <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Original Price (₹)</label>
+                                    <input type="number" step="0.01" placeholder="Optional" value={formData.original_price} onChange={(e) => setFormData({ ...formData, original_price: e.target.value })} className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium text-sm" />
+                                </div> */}
                                 <div>
-                                    <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Price (₹)</label>
+                                    <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Selling Price (₹)</label>
                                     <input type="number" step="0.01" required value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium text-sm" />
                                 </div>
                                 <div>
@@ -292,6 +320,11 @@ export default function AdminProductsPage() {
                                         ))}
                                     </select>
                                 </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Sizes (comma separated)</label>
+                                <input type="text" placeholder="e.g. S, M, L, XL" value={formData.sizes} onChange={(e) => setFormData({ ...formData, sizes: e.target.value })} className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-medium text-sm" />
                             </div>
 
                             <div>
@@ -327,11 +360,6 @@ export default function AdminProductsPage() {
                                             ))}
                                         </div>
                                     )}
-                                </div>
-                                <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
-                                    <button type="button" onClick={() => setFormData({...formData, images: [...formData.images, 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=800']})} className="text-[11px] bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-lg shrink-0 font-medium">🏏 Bat Image</button>
-                                    <button type="button" onClick={() => setFormData({...formData, images: [...formData.images, 'https://images.unsplash.com/photo-1593341646782-e0b495cff86d?auto=format&fit=crop&q=80&w=800']})} className="text-[11px] bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-lg shrink-0 font-medium">🧤 Gloves Image</button>
-                                    <button type="button" onClick={() => setFormData({...formData, images: [...formData.images, 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=800']})} className="text-[11px] bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-lg shrink-0 font-medium">🔴 Ball Image</button>
                                 </div>
                             </div>
 

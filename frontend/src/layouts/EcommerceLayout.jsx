@@ -235,9 +235,9 @@ export default function EcommerceLayout({ children }) {
                             <Link href="/contact" className="text-sm font-bold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors relative group py-2">
                                 Contact Us<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-300 group-hover:w-full"></span>
                             </Link>
-                            <Link href="/products?category=sale" className="text-sm font-bold text-rose-500 hover:text-rose-600 transition-colors relative group py-2">
+                            {/* <Link href="/products?category=sale" className="text-sm font-bold text-rose-500 hover:text-rose-600 transition-colors relative group py-2">
                                 Sale<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-500 transition-all duration-300 group-hover:w-full"></span>
-                            </Link>
+                            </Link> */}
                         </nav>
 
                         {/* Right Icons */}
@@ -354,9 +354,9 @@ export default function EcommerceLayout({ children }) {
                                 <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between py-3.5 px-4 rounded-xl hover:bg-indigo-50 dark:hover:bg-slate-800 font-bold text-gray-900 dark:text-white transition-colors group">
                                     Contact Us <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" />
                                 </Link>
-                                <Link href="/products?category=sale" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between py-3.5 px-4 rounded-xl bg-rose-50 dark:bg-slate-800 font-bold text-rose-600 dark:text-rose-400 transition-colors mt-2">
+                                {/* <Link href="/products?category=sale" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between py-3.5 px-4 rounded-xl bg-rose-50 dark:bg-slate-800 font-bold text-rose-600 dark:text-rose-400 transition-colors mt-2">
                                     Sale - Up to 50% Off <ChevronRight className="w-5 h-5 text-rose-400" />
-                                </Link>
+                                </Link> */}
                             </nav>
 
                             <div className="mt-10 px-8">
@@ -455,7 +455,7 @@ export default function EcommerceLayout({ children }) {
                             {navCategories?.slice(0, 4).map(cat => (
                                 <li key={cat.id}><Link href={`/products?category=${cat.slug}`} className="text-gray-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{cat.name}</Link></li>
                             ))}
-                            <li><Link href="/products?category=sale" className="text-rose-500 font-medium hover:text-rose-600 transition-colors">Sale</Link></li>
+                            {/* <li><Link href="/products?category=sale" className="text-rose-500 font-medium hover:text-rose-600 transition-colors">Sale</Link></li> */}
                         </ul>
                     </div>
 
