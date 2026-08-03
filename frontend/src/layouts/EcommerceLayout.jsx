@@ -123,11 +123,11 @@ export default function EcommerceLayout({ children }) {
     const displaySocials = activeSocials.length > 0 ? activeSocials : allSocials.slice(0, 3);
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-slate-950 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300">
+        <div className="min-h-screen bg-transparent dark:bg-slate-950 dark:text-slate-100 flex flex-col font-sans transition-colors duration-300">
 
             {/* ── Navbar ── */}
             <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg shadow-md dark:border-b dark:border-slate-800' : 'bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800'}`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-[1600px] xl:px-12 mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-24">
 
                         {/* Mobile: Hamburger */}
@@ -403,7 +403,7 @@ export default function EcommerceLayout({ children }) {
 
             {/* ── Dynamic Footer ── */}
             <footer className="bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-800 py-16 px-4 md:px-8 mt-auto">
-                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 items-start">
+                <div className="max-w-[1600px] xl:px-12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 items-start">
 
                     {/* Brand + Business Info */}
                     <div className="lg:col-span-2 flex flex-col">
@@ -485,7 +485,7 @@ export default function EcommerceLayout({ children }) {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="max-w-7xl mx-auto mt-12 pt-6 border-t border-gray-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="max-w-[1600px] xl:px-12 mx-auto mt-12 pt-6 border-t border-gray-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-gray-400 dark:text-slate-500">
                         © {new Date().getFullYear()} {footerSettings.footer_trade_name || 'Big bestow'}. All rights reserved.
                     </p>

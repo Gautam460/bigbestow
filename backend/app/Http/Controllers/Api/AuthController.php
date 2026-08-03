@@ -36,7 +36,7 @@ class AuthController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'email' => ['गलत ईमेल या पासवर्ड! कृपया सही क्रेडेंशियल्स दर्ज करें।'],
+            'email' => ['Invalid email or password! Please enter correct credentials.'],
         ]);
     }
 
@@ -64,7 +64,7 @@ class AuthController extends Controller
                 }
 
                 throw ValidationException::withMessages([
-                    'email' => ['Access Denied: आपके पास Superadmin या Admin की अनुमति (Permission) नहीं है!'],
+                    'email' => ['Access Denied: You do not have Superadmin or Admin permissions!'],
                 ]);
             }
 
@@ -83,7 +83,7 @@ class AuthController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'email' => ['गलत ईमेल या पासवर्ड! कृपया सही क्रेडेंशियल्स दर्ज करें।'],
+            'email' => ['Invalid email or password! Please enter correct credentials.'],
         ]);
     }
 

@@ -22,7 +22,9 @@ class FrontendApiController extends Controller
             ->take(8)
             ->get();
 
-        $categories = Category::with('subcategories')
+        $categories = Category::with(['subcategories', 'products' => function($q) {
+            $q->where('status', true)->latest()->take(8);
+        }])
             ->withCount('products')
             ->where('status', true)
             ->get();
