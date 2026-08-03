@@ -523,9 +523,9 @@ export default function HomeClient({ initialProps = {} }) {
                     <p className="text-gray-500 mb-16 text-lg">Join thousands of players who rely on Bigbestow for their match-day performance.</p>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                         {[
-                            { name: "Virat K.", role: "Pro Batsman", text: "The willow quality is simply unmatched. It pings right off the middle every time. Best bat I've used this season." },
-                            { name: "Rohit S.", role: "Club Cricketer", text: "Incredible customer service and genuine English willow bats. The balance and pick-up are absolutely perfect." },
-                            { name: "Hardik P.", role: "All-rounder", text: "My entire kit bag was delivered the next day. The premium gear selection is insane and the quality is top notch." }
+                            { name: "Faisal", role: "Pro Batsman", text: "The willow quality is simply unmatched. It pings right off the middle every time. Best bat I've used this season." },
+                            { name: "Harsh", role: "Club Cricketer", text: "Incredible customer service and genuine English willow bats. The balance and pick-up are absolutely perfect." },
+                            { name: "Swati", role: "All-rounder", text: "My entire kit bag was delivered the next day. The premium gear selection is insane and the quality is top notch." }
                         ].map((t, i) => (
                             <div key={i} className="bg-gray-50 dark:bg-gray-800 p-8 lg:p-10 rounded-[2rem] relative border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
                                 <div className="flex gap-1 mb-6">
