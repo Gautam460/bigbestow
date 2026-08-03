@@ -51,7 +51,7 @@ class FrontendApiController extends Controller
                 $query->whereHas('category', function ($q) use ($catSlug) {
                     $q->where('slug', $catSlug)
                         ->orWhere('id', $catSlug)
-                        ->orWhere('name', 'like', "%{$catSlug}%");
+                        ->orWhere('name', $catSlug);
                 });
             }
         }
@@ -61,7 +61,7 @@ class FrontendApiController extends Controller
             $query->whereHas('subcategory', function ($q) use ($subSlug) {
                 $q->where('slug', $subSlug)
                     ->orWhere('id', $subSlug)
-                    ->orWhere('name', 'like', "%{$subSlug}%");
+                    ->orWhere('name', $subSlug);
             });
         }
 

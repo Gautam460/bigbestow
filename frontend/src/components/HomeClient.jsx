@@ -494,7 +494,7 @@ export default function HomeClient({ initialProps = {} }) {
                         {/* Two stacked right tiles */}
                         <div className="flex flex-col gap-6 h-full">
                             <div className="group relative rounded-[2rem] overflow-hidden shadow-md hover:shadow-2xl transition-all h-1/2">
-                                <img src="https://images.unsplash.com/photo-1593787406536-3676a152d9bc?auto=format&fit=crop&q=80&w=600" alt="Pro Gear" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=600" alt="Pro Gear" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                                 <div className="absolute bottom-0 left-0 w-full p-8">
                                     <h3 className="text-2xl font-black text-white mb-4">Pro Protective Gear</h3>
