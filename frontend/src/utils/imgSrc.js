@@ -14,7 +14,7 @@
  *         <img src={getImgSrc(banner.image_url)} />
  */
 
-const DEFAULT_FALLBACK = 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=800';
+const DEFAULT_FALLBACK = '/storage/products/zpFivxzYc24CTUi18ZGbUdRWvIJ4gFzgX9quy4SQ.webp';
 
 export function getImgSrc(image, fallback = null) {
     if (!image) return fallback || DEFAULT_FALLBACK;

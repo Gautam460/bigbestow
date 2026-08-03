@@ -40,6 +40,30 @@ export default function HomeClient({ initialProps = {} }) {
     const [wishlistIds, setWishlistIds] = useState([]);
     const [activeCategoryTab, setActiveCategoryTab] = useState('all');
     const categoryScrollRef = useRef(null);
+    const [timeLeft, setTimeLeft] = useState({ days: 2, hours: 14, mins: 45, secs: 22 });
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(prev => {
+                let { days, hours, mins, secs } = prev;
+                if (secs > 0) secs--;
+                else {
+                    secs = 59;
+                    if (mins > 0) mins--;
+                    else {
+                        mins = 59;
+                        if (hours > 0) hours--;
+                        else {
+                            hours = 23;
+                            if (days > 0) days--;
+                        }
+                    }
+                }
+                return { days, hours, mins, secs };
+            });
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
 
     useEffect(() => {
         const updateWishlist = () => {
@@ -420,9 +444,14 @@ export default function HomeClient({ initialProps = {} }) {
                                 Unleash your true potential with our limited edition English Willow series. Hand-selected for ultimate balance, massive edges, and explosive power. Available for a limited time only.
                             </p>
                             
-                            {/* Countdown Timer Dummy */}
+                            {/* Countdown Timer */}
                             <div className="flex gap-4 mb-10">
-                                {[{label: 'Days', val: '02'}, {label: 'Hours', val: '14'}, {label: 'Mins', val: '45'}, {label: 'Secs', val: '22'}].map((time, idx) => (
+                                {[
+                                    {label: 'Days', val: String(timeLeft.days).padStart(2, '0')},
+                                    {label: 'Hours', val: String(timeLeft.hours).padStart(2, '0')},
+                                    {label: 'Mins', val: String(timeLeft.mins).padStart(2, '0')},
+                                    {label: 'Secs', val: String(timeLeft.secs).padStart(2, '0')}
+                                ].map((time, idx) => (
                                     <div key={idx} className="flex flex-col items-center justify-center bg-gray-800/80 backdrop-blur-sm border border-gray-700 w-16 h-16 md:w-20 md:h-20 rounded-xl shadow-inner">
                                         <span className="text-xl md:text-3xl font-black text-white">{time.val}</span>
                                         <span className="text-[10px] md:text-xs text-gray-400 uppercase font-bold tracking-wider">{time.label}</span>
@@ -434,37 +463,6 @@ export default function HomeClient({ initialProps = {} }) {
                                 Claim Offer <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            
-            {/* 4.5. New Section: Top Brands Marquee */}
-            <div className="bg-white dark:bg-gray-900 border-y border-gray-100 dark:border-gray-800 py-12 overflow-hidden relative">
-                <style dangerouslySetInnerHTML={{__html: `
-                    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } }
-                    .animate-marquee { display: flex; animation: marquee 30s linear infinite; }
-                    .animate-marquee-container:hover .animate-marquee { animation-play-state: paused; }
-                `}} />
-                <div className="max-w-[1600px] xl:px-12 mx-auto px-4 mb-8 text-center">
-                    <p className="text-sm font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.3em]">Premium Brands We Carry</p>
-                </div>
-                <div className="relative flex overflow-x-hidden animate-marquee-container mask-edges-wide">
-                    <style dangerouslySetInnerHTML={{__html: `
-                        .mask-edges-wide {
-                            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-                            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-                        }
-                    `}} />
-                    <div className="animate-marquee items-center shrink-0 min-w-full justify-around gap-16 px-8">
-                        {['SG CRICKET', 'SS TON', 'MRF', 'GRAY-NICOLLS', 'KOOKABURRA', 'SPARTAN', 'GUNN & MOORE', 'DSC', 'NEW BALANCE', 'MASURI'].map((brand, i) => (
-                            <span key={i} className="text-3xl md:text-5xl font-black text-gray-200 dark:text-gray-800/80 tracking-tighter hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer shrink-0 whitespace-nowrap">{brand}</span>
-                        ))}
-                    </div>
-                    <div className="animate-marquee items-center shrink-0 min-w-full justify-around gap-16 px-8 absolute top-0 left-full">
-                        {['SG CRICKET', 'SS TON', 'MRF', 'GRAY-NICOLLS', 'KOOKABURRA', 'SPARTAN', 'GUNN & MOORE', 'DSC', 'NEW BALANCE', 'MASURI'].map((brand, i) => (
-                            <span key={'dup-'+i} className="text-3xl md:text-5xl font-black text-gray-200 dark:text-gray-800/80 tracking-tighter hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer shrink-0 whitespace-nowrap">{brand}</span>
-                        ))}
                     </div>
                 </div>
             </div>
@@ -526,8 +524,8 @@ export default function HomeClient({ initialProps = {} }) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                         {[
                             { name: "Virat K.", role: "Pro Batsman", text: "The willow quality is simply unmatched. It pings right off the middle every time. Best bat I've used this season." },
-                            { name: "Steve S.", role: "Club Cricketer", text: "Incredible customer service and genuine English willow bats. The balance and pick-up are absolutely perfect." },
-                            { name: "Ben S.", role: "All-rounder", text: "My entire kit bag was delivered the next day. The premium gear selection is insane and the quality is top notch." }
+                            { name: "Rohit S.", role: "Club Cricketer", text: "Incredible customer service and genuine English willow bats. The balance and pick-up are absolutely perfect." },
+                            { name: "Hardik P.", role: "All-rounder", text: "My entire kit bag was delivered the next day. The premium gear selection is insane and the quality is top notch." }
                         ].map((t, i) => (
                             <div key={i} className="bg-gray-50 dark:bg-gray-800 p-8 lg:p-10 rounded-[2rem] relative border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow">
                                 <div className="flex gap-1 mb-6">
@@ -548,7 +546,7 @@ export default function HomeClient({ initialProps = {} }) {
                     </div>
                 </div>
             </div>
-\n            {/* 5. Promotional Newsletter Banner */}
+            {/* 5. Promotional Newsletter Banner */}
             <div className="max-w-[1600px] xl:px-12 mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div className="bg-gradient-to-br from-indigo-900 to-gray-900 rounded-3xl overflow-hidden shadow-2xl relative">
                     <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/20 blur-[100px] rounded-full"></div>
